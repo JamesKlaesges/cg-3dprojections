@@ -7,8 +7,32 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     // 5. scale such that view volume bounds are ([-1,1], [-1,1], [-1,0])
 
     // ...
-    // var transform = Matrix.multiply([...]);
-    // mat4x4.values = transform.values;
+    var translate = new Matrix(4,4);
+    Mat4x4Translate(translate, -(prp.x), -(prp.y), -(prp.z));
+    
+    var rotate = new Matrix(4,4);
+    Mat4x4RotateX(rotate, theta);
+    Mat4x4RotateY(rotate, theta);
+    Mat4x4RotateZ(rotate, theta);
+    
+    var shear = new Matrix(4,4);
+    var DOP
+    var shx
+    var shy
+    Mat4x4ShearXY(shear, shx, shy);
+    
+    var translateClip = new Matrix(4,4)
+    var near
+    Mat4x4Translate(translateClip, 0, 0, near)
+    
+    var scale = new Matrix(4,4);
+    var parx
+    var pary
+    var parz
+    Mat4x4Scale(mat4x4, parx, pary, parz)
+    
+    var transform = Matrix.multiply([scale,translateClip,shear,rotate,translate]);
+    mat4x4.values = transform.values;
 }
 
 // set values of mat4x4 to the parallel projection / view matrix
