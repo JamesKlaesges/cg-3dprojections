@@ -7,28 +7,38 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     // 5. scale such that view volume bounds are ([-1,1], [-1,1], [-1,0])
 
     // ...
+    console.log(prp)
+    console.log(srp);
+    console.log(vup);
+    console.log(clip);
+    console.log(mat4x4);
+    var n = prp - srp;
+    var u = vup * n;
+    var v = n * u;
+    
     var translate = new Matrix(4,4);
     Mat4x4Translate(translate, -(prp.x), -(prp.y), -(prp.z));
     
     var rotate = new Matrix(4,4);
+    var theta;
     Mat4x4RotateX(rotate, theta);
     Mat4x4RotateY(rotate, theta);
     Mat4x4RotateZ(rotate, theta);
     
     var shear = new Matrix(4,4);
-    var DOP
-    var shx
-    var shy
+    var DOP;
+    var shx;
+    var shy;
     Mat4x4ShearXY(shear, shx, shy);
     
-    var translateClip = new Matrix(4,4)
-    var near
-    Mat4x4Translate(translateClip, 0, 0, near)
+    var translateClip = new Matrix(4,4);
+    var near;
+    Mat4x4Translate(translateClip, 0, 0, near);
     
     var scale = new Matrix(4,4);
-    var parx
-    var pary
-    var parz
+    var parx;
+    var pary;
+    var parz;
     Mat4x4Scale(mat4x4, parx, pary, parz)
     
     var transform = Matrix.multiply([scale,translateClip,shear,rotate,translate]);
