@@ -12,6 +12,7 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     console.log(vup);
     console.log(clip);
     console.log(mat4x4);
+    /*
     var n = prp - srp;
     var u = vup * n;
     var v = n * u;
@@ -43,6 +44,7 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     
     var transform = Matrix.multiply([scale,translateClip,shear,rotate,translate]);
     mat4x4.values = transform.values;
+    */
 }
 
 // set values of mat4x4 to the parallel projection / view matrix
