@@ -6,7 +6,6 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     // 4. translate near clipping plane to origin
     // 5. scale such that view volume bounds are ([-1,1], [-1,1], [-1,0])
 
-    // ...
     console.log(prp)
     console.log(srp);
     console.log(vup);
@@ -16,7 +15,7 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     var n = prp.x - srp.x;
     var u = vup.x * n;
     var v = n * u;
-    var CW = [(clip[0] + clip[1])/2, (clip[2] + clip[3])/2, 0]
+    var CW = [(clip[0] + clip[1])/2, (clip[2] + clip[3])/2, n]
     
     var translate = new Matrix(4,4);
     Mat4x4Translate(translate, -(prp.x), -(prp.y), -(prp.z));
@@ -40,7 +39,7 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     var parx = 2/(clip[1] - clip[0]);
     var pary = 2/(clip[3] - clip[2]);
     var parz = 1/clip[5];
-    Mat4x4Scale(mat4x4, parx, pary, parz)
+    Mat4x4Scale(scale, parx, pary, parz)
     
     var transform = Matrix.multiply([scale,translateClip,shear,rotate,translate]);
     mat4x4.values = transform.values;
