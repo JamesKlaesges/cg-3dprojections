@@ -12,10 +12,11 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     console.log(vup);
     console.log(clip);
     console.log(mat4x4);
-    /*
-    var n = prp - srp;
-    var u = vup * n;
+    
+    var n = prp.x - srp.x;
+    var u = vup.x * n;
     var v = n * u;
+    var CW = [(clip[0] + clip[1])/2, (clip[2] + clip[3])/2, 0]
     
     var translate = new Matrix(4,4);
     Mat4x4Translate(translate, -(prp.x), -(prp.y), -(prp.z));
@@ -27,24 +28,23 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     Mat4x4RotateZ(rotate, theta);
     
     var shear = new Matrix(4,4);
-    var DOP;
-    var shx;
-    var shy;
+    var DOP = [CW[0] - prp.x, CW[1] - prp.y, CW[2] - prp.z];
+    var shx = -DOP[0]/DOP[2];
+    var shy = -DOP[1]/DOP[2];
     Mat4x4ShearXY(shear, shx, shy);
     
     var translateClip = new Matrix(4,4);
-    var near;
-    Mat4x4Translate(translateClip, 0, 0, near);
+    Mat4x4Translate(translateClip, 0, 0, clip[4]);
     
     var scale = new Matrix(4,4);
-    var parx;
-    var pary;
-    var parz;
+    var parx = 2/(clip[1] - clip[0]);
+    var pary = 2/(clip[3] - clip[2]);
+    var parz = 1/clip[5];
     Mat4x4Scale(mat4x4, parx, pary, parz)
     
     var transform = Matrix.multiply([scale,translateClip,shear,rotate,translate]);
     mat4x4.values = transform.values;
-    */
+    
 }
 
 // set values of mat4x4 to the parallel projection / view matrix
@@ -61,12 +61,18 @@ function Mat4x4Projection(mat4x4, prp, srp, vup, clip) {
 
 // set values of mat4x4 to project a parallel image on the z=0 plane
 function Mat4x4MPar(mat4x4) {
-    // mat4x4.values = ...;
+   mat4x4.values = [[1, 0, 0, 0],
+                    [0, 1, 0, 0],
+                    [0, 0, 0, 0],
+                    [0, 0, 0, 1]];
 }
 
 // set values of mat4x4 to project a perspective image on the z=-1 plane
 function Mat4x4MPer(mat4x4) {
-    // mat4x4.values = ...;
+    mat4x4.values = [[1, 0, 0, 0],
+                     [0, 1, 0, 0],
+                     [0, 0, 1, 0],
+                     [0, 0, -1, 0]];
 }
 
 
