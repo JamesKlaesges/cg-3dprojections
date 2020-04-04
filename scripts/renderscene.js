@@ -72,11 +72,17 @@ function Animate(timestamp) {
     // ... step 2
     if (scene.view.type == "parallel")
     {
-        Mat4x4Parallel(scene.models.matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);
+        for (let i = 0; i < scene.models.length; i++)
+        {
+            Mat4x4Parallel(scene.models[i].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);
+        }
     }
     else if (scene.view.type == "perspective")
     {
-        Mat4x4Projection(scene.models.matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);    
+        for (let j = 0; j < scene.models[i].vertices.length; j++)
+        {
+            Mat4x4Projection(scene.models[j].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);    
+        }
     }
     
     DrawScene();
@@ -84,7 +90,7 @@ function Animate(timestamp) {
     window.requestAnimationFrame(Animate);
 }
 
-// Main drawing code - use information contained in variable `scene`
+// Main drawing code - use information contained i0n variable `scene`
 function DrawScene() {
     console.log(scene);
 }
