@@ -9,11 +9,13 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     var n = prp.x - srp.x;
     var u = vup.x * n;
     var v = n * u;
+    //Z-value for Center of Window?
     var CW = [(clip[0] + clip[1])/2, (clip[2] + clip[3])/2, n]
     
     var translate = new Matrix(4,4);
     Mat4x4Translate(translate, -(prp.x), -(prp.y), -(prp.z));
     
+    //Change this
     var rotate = new Matrix(4,4);
     var theta;
     Mat4x4RotateX(rotate, theta);
