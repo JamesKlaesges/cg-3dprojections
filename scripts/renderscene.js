@@ -70,9 +70,13 @@ function Animate(timestamp) {
     var time = timestamp - start_time;
 
     // ... step 2
-    if (scene.type == "parallel")
+    if (scene.view.type == "parallel")
     {
-        scene.matrix = Mat4x4Parallel(scene.matrix, scene.prp, scene.srp, scene.vup, scene.clip);
+        Mat4x4Parallel(scene.models.matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);
+    }
+    else if (scene.view.type == "perspective")
+    {
+        Mat4x4Projection(scene.models.matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);    
     }
     
     DrawScene();
