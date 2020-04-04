@@ -5,12 +5,6 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     // 3. shear such that CW is on the z-axis
     // 4. translate near clipping plane to origin
     // 5. scale such that view volume bounds are ([-1,1], [-1,1], [-1,0])
-
-    console.log(prp)
-    console.log(srp);
-    console.log(vup);
-    console.log(clip);
-    console.log(mat4x4);
     
     var n = prp.x - srp.x;
     var u = vup.x * n;
@@ -43,7 +37,7 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     
     var transform = Matrix.multiply([scale,translateClip,shear,rotate,translate]);
     mat4x4.values = transform.values;
-    
+    console.log(mat4x4);
 }
 
 // set values of mat4x4 to the parallel projection / view matrix
