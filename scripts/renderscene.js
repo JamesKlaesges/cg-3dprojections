@@ -69,7 +69,9 @@ function Animate(timestamp) {
 
     var time = timestamp - start_time;
 
-    // ... step 2
+    // -----Step 2: Transform Models-----
+    
+    //Calculate transformation matrix to transform models into canonical view volume
     if (scene.view.type == "parallel")
     {
         for (let i = 0; i < scene.models.length; i++)
@@ -84,6 +86,18 @@ function Animate(timestamp) {
             Mat4x4Projection(scene.models[j].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);    
         }
     }
+    //Multiply vertices with transformation matrix
+    
+    
+    //Implement Cohen-Sutherland 3D line clipping
+    
+    
+    //Project onto view plane
+    var projectionMatrix = new Matrix(4,4);
+    projectionMatrix.values = [[400, 0, 0, 400],
+                               [0, 300, 0, 300],
+                               [0, 0, 1, 0],
+                               [0, 0, 0, 1]];
     
     DrawScene();
 
@@ -93,6 +107,9 @@ function Animate(timestamp) {
 // Main drawing code - use information contained i0n variable `scene`
 function DrawScene() {
     console.log(scene);
+    //Draw 2D lines for each edge
+    
+    
 }
 
 // Called when user selects a new scene JSON file
