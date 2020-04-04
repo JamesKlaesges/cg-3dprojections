@@ -16,7 +16,7 @@ function Init() {
     // initial scene... feel free to change this
     scene = {
         view: {
-            type: 'perspective',
+            type: 'parallel',
             prp: Vector3(44, 20, -16),
             srp: Vector3(20, 20, -40),
             vup: Vector3(0, 1, 0),
@@ -70,7 +70,11 @@ function Animate(timestamp) {
     var time = timestamp - start_time;
 
     // ... step 2
-
+    if (scene.type == 'parallel')
+    {
+        scene.matrix = Mat4x4Parallel(scene.matrix, scene.prp, scene.srp, scene.vup, scene.clip);
+    }
+    
     DrawScene();
 
     window.requestAnimationFrame(Animate);
