@@ -2,6 +2,12 @@ var view;
 var ctx;
 var scene;
 var start_time;
+var LEFT =   32; //100000
+var RIGHT =  16; //010000
+var BOTTOM = 8;  //001000
+var TOP =    4;  //000100
+var FRONT =  2;  //000010
+var BACK =   1;  //000001
 
 // Initialization function - called when web page loads
 function Init() {
@@ -101,7 +107,15 @@ function Animate(timestamp) {
     }
     
     //Implement Cohen-Sutherland 3D line clipping
-    
+    if (scene.view.type == "parallel")
+    {
+        var boundingPlane = [-1, 1, -1, 1, 0, -1];
+        
+    }
+    else if (scene.view.type == "perspective")
+    {
+        var boundingPlane = [z, -z, z, -z, zmin, -1];
+    }
     
     //Project onto view plane
     var projectionMatrix = new Matrix(4,4);
@@ -131,6 +145,19 @@ function DrawScene() {
     //Draw 2D lines for each edge
     
     
+}
+
+function Outcode(vector)
+{
+    var outcode = 0;
+    if (vector.x < view.x_min) { outcode += LEFT; }
+    else if (vector.x > view.x_max) { outcode += RIGHT; }
+    if (vector.y < view.y_min) { outcode += BOTTOM; }
+    else if (vector.y > view.y_max) { outcode += TOP; }
+    if (vector.z < view.z_min) { outcode += FRONT; }
+    else if (vector.z > view.z_max) { outcode += BACK; }
+    
+    return outcode;
 }
 
 // Called when user selects a new scene JSON file
