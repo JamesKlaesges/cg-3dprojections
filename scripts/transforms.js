@@ -7,7 +7,10 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
 
     // 2. rotate VRC such that (u,v,n) align with (x,y,z)
     var n = prp.subtract(srp).normalize();
+    console.log(n);
+    console.log(vup);
     var u = vup.cross(n).normalize();
+    console.log(u);
     var v = n.cross(u);
     rotate.values = [ 
         [ u.x, u.y, u.z, 0], 
