@@ -81,13 +81,20 @@ function Animate(timestamp) {
     }
     else if (scene.view.type == "perspective")
     {
-        for (let j = 0; j < scene.models[i].vertices.length; j++)
+        for (let i = 0; j < scene.models.length; j++)
         {
-            Mat4x4Projection(scene.models[j].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);    
+            Mat4x4Projection(scene.models[i].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);    
         }
     }
     //Multiply vertices with transformation matrix
-    
+    for (let i = 0; i < scene.models.length; i++)
+    {
+        for (let j = 0; j < scene.models[i].vertices.length; j++)
+        {
+            scene.models[i].vertices[j].values = Matrix.multiply([scene.models[i].vertices[j], scene.models[i].matrix]);
+            console.log(scene.models[i].vertices[j]);
+        }
+    }
     
     //Implement Cohen-Sutherland 3D line clipping
     
