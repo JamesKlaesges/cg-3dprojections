@@ -91,7 +91,8 @@ function Animate(timestamp) {
     {
         for (let j = 0; j < scene.models[i].vertices.length; j++)
         {
-            scene.models[i].vertices[j].values = Matrix.multiply([scene.models[i].matrix, scene.models[i].vertices[j]]);
+            var vertex = Matrix.multiply([scene.models[i].matrix, scene.models[i].vertices[j]]);
+            scene.models[i].vertices[j] = Vector4(vertex.x, vertex.y, vertex.z, vertex.w)
             console.log(scene.models[i].vertices[j]);
         }
     }
