@@ -148,18 +148,36 @@ function LoadNewScene() {
 
 // Called when user presses a key on the keyboard down 
 function OnKeyDown(event) {
+
+    //calculate u,v,n. 
+    var n = scene.view.prp.subtract( scene.view.srp ).normalize(); 
+    var u = scene.view.vup.cross( n ).normalize();
+
     switch (event.keyCode) {
         case 37: // LEFT Arrow
             console.log("left");
+            scene.view.prp.subtract(u); 
+            scene.view.srp.subtract(u); 
+            DrawScene(); 
+            
             break;
         case 38: // UP Arrow
             console.log("up");
+            scene.view.prp.add(n); 
+            scene.view.srp.add(n); 
+            DrawScene(); 
             break;
         case 39: // RIGHT Arrow
             console.log("right");
+            scene.view.prp.add(u); 
+            scene.view.srp.add(u); 
+            DrawScene(); 
             break;
         case 40: // DOWN Arrow
             console.log("down");
+            scene.view.subtract(n); 
+            scene.view.subtract(n); 
+            DrawScene(); 
             break;
     }
 }

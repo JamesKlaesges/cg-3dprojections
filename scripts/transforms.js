@@ -1,36 +1,37 @@
 // set values of mat4x4 to the parallel projection / view matrix
 function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
+    
     // 1. translate PRP to origin
-    // 2. rotate VRC such that (u,v,n) align with (x,y,z)
-    // 3. shear such that CW is on the z-axis
-    // 4. translate near clipping plane to origin
-    // 5. scale such that view volume bounds are ([-1,1], [-1,1], [-1,0])
-    
-    var n = prp.x - srp.x;
-    var u = vup.x * n;
-    var v = n * u;
-    //Z-value for Center of Window?
-    var CW = [(clip[0] + clip[1])/2, (clip[2] + clip[3])/2, n]
-    
     var translate = new Matrix(4,4);
     Mat4x4Translate(translate, -(prp.x), -(prp.y), -(prp.z));
+
+    // 2. rotate VRC such that (u,v,n) align with (x,y,z)
+    var n = prp.subtract(srp).normalize();
+    var u = vup.cross(n).normalize();
+    var v = n.cross(u);
+    rotate.values = [ 
+        [ u.x, u.y, u.z, 0], 
+        [v.x, v.y, v.z, 0], 
+        [n.x, n.y, n.z, 0], 
+        [0, 0, 0, 1]
+    ];
+
+
+    // 3. shear such that CW is on the z-axis
     
-    //Change this
-    var rotate = new Matrix(4,4);
-    var theta;
-    Mat4x4RotateX(rotate, theta);
-    Mat4x4RotateY(rotate, theta);
-    Mat4x4RotateZ(rotate, theta);
-    
+    var CW = [(clip[0] + clip[1])/2, (clip[2] + clip[3])/2, n]
     var shear = new Matrix(4,4);
     var DOP = [CW[0] - prp.x, CW[1] - prp.y, CW[2] - prp.z];
+    // maybe - var DOP = CW.subtract(prp);  ?
     var shx = -DOP[0]/DOP[2];
     var shy = -DOP[1]/DOP[2];
     Mat4x4ShearXY(shear, shx, shy);
     
+    // 4. translate near clipping plane to origin
     var translateClip = new Matrix(4,4);
     Mat4x4Translate(translateClip, 0, 0, clip[4]);
     
+    // 5. scale such that view volume bounds are ([-1,1], [-1,1], [-1,0])
     var scale = new Matrix(4,4);
     var parx = 2/(clip[1] - clip[0]);
     var pary = 2/(clip[3] - clip[2]);
@@ -44,14 +45,41 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
 
 // set values of mat4x4 to the parallel projection / view matrix
 function Mat4x4Projection(mat4x4, prp, srp, vup, clip) {
-    // 1. translate PRP to origin
-    // 2. rotate VRC such that (u,v,n) align with (x,y,z)
-    // 3. shear such that CW is on the z-axis
-    // 4. scale such that view volume bounds are ([z,-z], [z,-z], [-1,zmin])
 
-    // ...
-    // var transform = Matrix.multiply([...]);
-    // mat4x4.values = transform.values;
+    // 1. translate PRP to origin
+    var translate = new Matrix(4,4);
+    Mat4x4Translate(translate, -(prp.x), -(prp.y), -(prp.z));
+
+    // 2. rotate VRC such that (u,v,n) align with (x,y,z)
+    var n = prp.subtract(srp).normalize();
+    var u = vup.cross(n).normalize();
+    var v = n.cross(u);
+    var rotate = new Matrix(4,4); 
+    rotate.values = [ 
+        [ u.x, u.y, u.z, 0], 
+        [v.x, v.y, v.z, 0], 
+        [n.x, n.y, n.z, 0], 
+        [0, 0, 0, 1]
+    ];
+    
+    // 3. shear such that CW is on the z-axis
+    var shear = new Matrix(4,4);
+    var CW = [(clip[0] + clip[1])/2, (clip[2] + clip[3])/2, n]
+    var DOP = [CW[0] - prp.x, CW[1] - prp.y, CW[2] - prp.z];
+    // maybe - var DOP = CW.subtract(prp);  ?
+    var shx = -DOP[0]/DOP[2];
+    var shy = -DOP[1]/DOP[2];
+    Mat4x4ShearXY(shear, shx, shy);
+
+    // 4. scale such that view volume bounds are ([z,-z], [z,-z], [-1,zmin])
+    var scale = new Matrix(4,4);
+    var parx = (2 * clip[4]) /  (clip[1].subtract(clip[0])  * clip[5]); 
+    var pary =  (2*clip[4]) / (clip[3].subtract(clip[2]) * clip[5] ); 
+    var parz = 1/ clip[5];
+    Mat4x4Scale(scale, parx, pary, parz)
+    
+    var transform = Matrix.multiply([scale,translateClip,shear,rotate,translate]);
+    mat4x4.values = transform.values;
 }
 
 // set values of mat4x4 to project a parallel image on the z=0 plane
