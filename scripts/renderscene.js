@@ -110,6 +110,16 @@ function Animate(timestamp) {
                                [0, 0, 1, 0],
                                [0, 0, 0, 1]];
     
+    for (let i = 0; i < scene.models.length; i++)
+    {
+        for (let j = 0; j < scene.models[i].vertices.length; j++)
+        {
+            var vertex = Matrix.multiply([projectionMatrix, scene.models[i].vertices[j]]);
+            scene.models[i].vertices[j] = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+            console.log(scene.models[i].vertices[j]);
+        }
+    }
+    
     DrawScene();
 
     window.requestAnimationFrame(Animate);
