@@ -110,11 +110,25 @@ function Animate(timestamp) {
     if (scene.view.type == "parallel")
     {
         var boundingPlane = [-1, 1, -1, 1, 0, -1];
+        for (let i = 0; i < scene.models.length; i++)
+        {
+            for (let j = 0; j < scene.models[i].vertices.length; j++)
+            {
+                clipLine(scene.models[i].vertices[j]);
+            }
+        }
         
     }
     else if (scene.view.type == "perspective")
     {
         var boundingPlane = [z, -z, z, -z, zmin, -1];
+        for (let i = 0; i < scene.models.length; i++)
+        {
+            for (let j = 0; j < scene.models[i].vertices.length; j++)
+            {
+                clipLine(scene.models[i].vertices[j]);
+            }
+        }
     }
     
     //Project onto view plane
@@ -143,11 +157,19 @@ function Animate(timestamp) {
 function DrawScene() {
     console.log(scene);
     //Draw 2D lines for each edge
-    
+    for (let i = 0; i < scene.models.length; i++)
+    {
+        for (let j = 0; j < scene.models[i].edges.length; j++)
+        {
+            var pt1 = scene.models[i].edges[j][0];
+            var pt2 = scene.models[i].edges[j][1];
+            DrawLine(scene.models[i].vertices[pt1].x, scene.models[i].vertices[pt1].y, scene.models[i].vertices[pt2].x, scene.models[i].vertices[pt2].y);
+        }
+    }
     
 }
 
-function Outcode(vector)
+function outcode(vector)
 {
     var outcode = 0;
     if (vector.x < view.x_min) { outcode += LEFT; }
@@ -158,6 +180,11 @@ function Outcode(vector)
     else if (vector.z > view.z_max) { outcode += BACK; }
     
     return outcode;
+}
+
+function clipLine(vector)
+{
+    
 }
 
 // Called when user selects a new scene JSON file
