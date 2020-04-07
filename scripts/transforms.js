@@ -74,8 +74,8 @@ function Mat4x4Projection(mat4x4, prp, srp, vup, clip) {
 
     // 4. scale such that view volume bounds are ([z,-z], [z,-z], [-1,zmin])
     var scale = new Matrix(4,4);
-    var parx = (2 * clip[4]) /  (clip[1].subtract(clip[0])  * clip[5]); 
-    var pary =  (2*clip[4]) / (clip[3].subtract(clip[2]) * clip[5] ); 
+    var parx = (2 * clip[4]) /  (clip[1] - clip[0])  * clip[5]); 
+    var pary =  (2*clip[4]) / (clip[3] - clip[2]) * clip[5] ); 
     var parz = 1/ clip[5];
     Mat4x4Scale(scale, parx, pary, parz)
     
