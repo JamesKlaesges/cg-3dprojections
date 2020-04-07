@@ -25,6 +25,7 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     var shear = new Matrix(4,4);
     var CW = Vector3((clip[0] + clip[1])/2, (clip[2] + clip[3])/2, -(clip[4]));
     var DOP = CW.subtract(prp);
+    DOP.normalize();
     var shx = -DOP.x/DOP.z;
     var shy = -DOP.y/DOP.z;
     Mat4x4ShearXY(shear, shx, shy);
@@ -69,6 +70,7 @@ function Mat4x4Projection(mat4x4, prp, srp, vup, clip) {
     var shear = new Matrix(4,4);
     var CW = Vector3((clip[0] + clip[1])/2, (clip[2] + clip[3])/2, -(clip[4]));
     var DOP = CW.subtract(prp);
+    DOP.normalize();
     var shx = -DOP.x/DOP.z;
     var shy = -DOP.y/DOP.z;
     Mat4x4ShearXY(shear, shx, shy);
