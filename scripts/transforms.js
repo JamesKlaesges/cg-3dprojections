@@ -37,7 +37,7 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     var scale = new Matrix(4,4);
     var parx = 2/(clip[1] - clip[0]);
     var pary = 2/(clip[3] - clip[2]);
-    var parz = 1/(clip[5]-clip[4]);
+    var parz = 1/(clip[5]);//-clip[4]);
     Mat4x4Scale(scale, parx, pary, parz);
     
     var transform = Matrix.multiply([scale,translateClip,shear,rotate,translate]);
