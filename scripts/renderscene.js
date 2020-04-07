@@ -110,7 +110,7 @@ function Animate(timestamp) {
     {
         for (let j = 0; j < scene.models[i].edges.length; j++)
         {
-            clipLine(scene.models[i].edge[j]);
+            clipLine(scene.models[i].edges[j]);
         }
     }
     
