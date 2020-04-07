@@ -232,8 +232,10 @@ function LoadNewScene() {
 function OnKeyDown(event) {
 
     //calculate u,v,n. 
-    var n = scene.view.prp.subtract( scene.view.srp ).normalize(); 
-    var u = scene.view.vup.cross( n ).normalize();
+    var n = scene.view.prp.subtract( scene.view.srp );
+    n.normalize(); 
+    var u = scene.view.vup.cross( n );
+    u.normalize();
 
     switch (event.keyCode) {
         case 37: // LEFT Arrow
