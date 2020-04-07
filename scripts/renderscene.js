@@ -163,6 +163,10 @@ function DrawScene() {
         {
             var pt1 = scene.models[i].edges[j][0];
             var pt2 = scene.models[i].edges[j][1];
+            console.log(scene.models[i].vertices[pt1].x);
+            console.log(scene.models[i].vertices[pt1].y);
+            console.log(scene.models[i].vertices[pt2].x);
+            console.log(scene.models[i].vertices[pt2].y)
             DrawLine(scene.models[i].vertices[pt1].x, scene.models[i].vertices[pt1].y, scene.models[i].vertices[pt2].x, scene.models[i].vertices[pt2].y);
         }
     }
