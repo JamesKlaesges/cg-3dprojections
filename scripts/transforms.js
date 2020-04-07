@@ -11,7 +11,6 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     var u = vup.cross(n)
     u.normalize();
     var v = n.cross(u);
-    v.normalize();
     var rotate = new Matrix(4,4);
     rotate.values = [ 
         [ u.x, u.y, u.z, 0], 
