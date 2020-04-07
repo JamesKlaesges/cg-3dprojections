@@ -22,12 +22,11 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
 
     // 3. shear such that CW is on the z-axis
     //The CW is defined at the near plane, so its z value is -near.
-    var CW = [(clip[0] + clip[1])/2, (clip[2] + clip[3])/2, -(clip[4])]
     var shear = new Matrix(4,4);
-    var DOP = [CW[0] - prp.x, CW[1] - prp.y, CW[2] - prp.z];
-    // maybe - var DOP = CW.subtract(prp);  ?
-    var shx = -DOP[0]/DOP[2];
-    var shy = -DOP[1]/DOP[2];
+    var CW = Vector3((clip[0] + clip[1])/2, (clip[2] + clip[3])/2, -(clip[4]));
+    var DOP = CW.subtract(prp);
+    var shx = -DOP.x/DOP.z;
+    var shy = -DOP.y/DOP.z;
     Mat4x4ShearXY(shear, shx, shy);
     
     // 4. translate near clipping plane to origin
