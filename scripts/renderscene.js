@@ -87,7 +87,7 @@ function Animate(timestamp) {
     }
     else if (scene.view.type == "perspective")
     {
-        for (let i = 0; j < scene.models.length; j++)
+        for (let i = 0; i < scene.models.length; i++)
         {
             Mat4x4Projection(scene.models[i].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);    
         }
