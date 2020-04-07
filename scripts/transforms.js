@@ -79,7 +79,7 @@ function Mat4x4Projection(mat4x4, prp, srp, vup, clip) {
     var parz = 1/ clip[5];
     Mat4x4Scale(scale, parx, pary, parz)
     
-    var transform = Matrix.multiply([scale,translateClip,shear,rotate,translate]);
+    var transform = Matrix.multiply([scale,shear,rotate,translate]);
     mat4x4.values = transform.values;
 }
 
