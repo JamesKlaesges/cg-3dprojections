@@ -37,11 +37,10 @@ function Mat4x4Parallel(mat4x4, prp, srp, vup, clip) {
     var parx = 2/(clip[1] - clip[0]);
     var pary = 2/(clip[3] - clip[2]);
     var parz = 1/(clip[5]-clip[4]);
-    Mat4x4Scale(scale, parx, pary, parz)
+    Mat4x4Scale(scale, parx, pary, parz);
     
     var transform = Matrix.multiply([scale,translateClip,shear,rotate,translate]);
     mat4x4.values = transform.values;
-    console.log(mat4x4);
 }
 
 // set values of mat4x4 to the parallel projection / view matrix
@@ -77,7 +76,7 @@ function Mat4x4Projection(mat4x4, prp, srp, vup, clip) {
     var parx = (2 * clip[4]) /  ((clip[1] - clip[0])  * clip[5]); 
     var pary =  (2*clip[4]) / ((clip[3] - clip[2]) * clip[5] ); 
     var parz = 1/ clip[5];
-    Mat4x4Scale(scale, parx, pary, parz)
+    Mat4x4Scale(scale, parx, pary, parz);
     
     var transform = Matrix.multiply([scale,shear,rotate,translate]);
     mat4x4.values = transform.values;
