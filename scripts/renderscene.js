@@ -106,27 +106,11 @@ function Animate(timestamp) {
     }
     
     //Implement Cohen-Sutherland 3D line clipping
-    if (scene.view.type == "parallel")
+    for (let i = 0; i < scene.models.length; i++)
     {
-        //var boundingPlane = [-1, 1, -1, 1, 0, -1];
-        for (let i = 0; i < scene.models.length; i++)
+        for (let j = 0; j < scene.models[i].edges.length; j++)
         {
-            for (let j = 0; j < scene.models[i].vertices.length; j++)
-            {
-                clipLine(scene.models[i].vertices[j]);
-            }
-        }
-        
-    }
-    else if (scene.view.type == "perspective")
-    {
-        //var boundingPlane = [z, -z, z, -z, zmin, -1];
-        for (let i = 0; i < scene.models.length; i++)
-        {
-            for (let j = 0; j < scene.models[i].vertices.length; j++)
-            {
-                clipLine(scene.models[i].vertices[j]);
-            }
+            clipLine(scene.models[i].edge[j]);
         }
     }
     
@@ -189,8 +173,11 @@ function outcode(vector)
     return outcode;
 }
 
-function clipLine(vector)
+function clipLine(edge)
 {
+    console.log(view)
+    //var boundingPlane = [-1, 1, -1, 1, 0, -1];
+    //var boundingPlane = [z, -z, z, -z, zmin, -1];
     
 }
 
