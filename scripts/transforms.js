@@ -52,8 +52,8 @@ function Mat4x4Projection(mat4x4, prp, srp, vup, clip) {
     Mat4x4Translate(translate, -(prp.x), -(prp.y), -(prp.z));
 
     // 2. rotate VRC such that (u,v,n) align with (x,y,z)
-    var n = prp.subtract(srp)//.normalize();
-    var u = vup.cross(n)//.normalize();
+    var n = prp.subtract(srp).normalize();
+    var u = vup.cross(n).normalize();
     var v = n.cross(u);
     var rotate = new Matrix(4,4); 
     rotate.values = [ 
