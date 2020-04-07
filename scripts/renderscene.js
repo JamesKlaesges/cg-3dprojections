@@ -106,6 +106,7 @@ function Animate(timestamp) {
     }
     
     //Implement Cohen-Sutherland 3D line clipping
+    var zmin = -scene.view.clip[4]/scene.view.clip[5];
     for (let i = 0; i < scene.models.length; i++)
     {
         for (let j = 0; j < scene.models[i].edges.length; j++)
@@ -114,7 +115,7 @@ function Animate(timestamp) {
             {
                 vertex0 = scene.models[i].vertices[scene.models[i].edges[j][k]];
                 vertex1 = scene.models[i].vertices[scene.models[i].edges[j][k+1]];
-                clipLine(vertex0, vertex1, scene.view.type);
+                clipLine(vertex0, vertex1, scene.view.type, zmin);
             }
         }
     }
@@ -164,37 +165,36 @@ function DrawScene() {
     
 }
 
-function outcode(vector, type)
+function outcode(vector, type, zmin)
 {
     var outcode = 0;
     var z = vector.z;
-    var zmin; // = ??
     if (type == "parallel")
     {
-        if (vector.x < -1) { outcode += LEFT; }
-        else if (vector.x > 1) { outcode += RIGHT; }
-        if (vector.y < -1) { outcode += BOTTOM; }
-        else if (vector.y > 1) { outcode += TOP; }
-        if (vector.z < 0) { outcode += FRONT; }
+        if (vector.x < -1)      { outcode += LEFT; }
+        else if (vector.x > 1)  { outcode += RIGHT; }
+        if (vector.y < -1)      { outcode += BOTTOM; }
+        else if (vector.y > 1)  { outcode += TOP; }
+        if (vector.z < 0)       { outcode += FRONT; }
         else if (vector.z > -1) { outcode += BACK; }
     }
     else if (type == "perspective")
     {
-        if (vector.x < z) { outcode += LEFT; }
+        if (vector.x < z)       { outcode += LEFT; }
         else if (vector.x > -z) { outcode += RIGHT; }
-        if (vector.y < z) { outcode += BOTTOM; }
+        if (vector.y < z)       { outcode += BOTTOM; }
         else if (vector.y > -z) { outcode += TOP; }
-        if (vector.z < zmin) { outcode += FRONT; }
+        if (vector.z < zmin)    { outcode += FRONT; }
         else if (vector.z > -1) { outcode += BACK; }
     }
     return outcode;
 }
 
 //Largely based from the text
-function clipLine(vertex0, vertex1, type)
+function clipLine(vertex0, vertex1, type, zmin)
 {
-    var out0 = outcode(vertex0, type);
-    var out1 = outcode(vertex1, type);
+    var out0 = outcode(vertex0, type, zmin);
+    var out1 = outcode(vertex1, type, zmin);
     var t;
     var result;
     var selectpt;
@@ -232,32 +232,75 @@ function clipLine(vertex0, vertex1, type)
             if ((selectout & LEFT) !== 0)
             {
                 //Clip to left edge
+                if (type == "parallel")
+                {
+                    
+                }
+                else if (type == "perspective")
+                {
+                    
+                }
                 
             }
             else if ((selectout & RIGHT) !== 0)
             {
                 //Clip to right edge
-                
+                if (type == "parallel")
+                {
+                    
+                }
+                else if (type == "perspective")
+                {
+                    
+                }
             }
             else if ((selectout & BOTTOM) !== 0)
             {
                 //Clip to bottom edge
-                
+                if (type == "parallel")
+                {
+                    
+                }
+                else if (type == "perspective")
+                {
+                    
+                }
             }
             else if ((selectout & TOP) !== 0)
             {
                 //Clip to top edge
-                
+                if (type == "parallel")
+                {
+                    
+                }
+                else if (type == "perspective")
+                {
+                    
+                }
             }
             else if ((selectout & FRONT) !== 0)
             {
                 //Clip to front edge
-                
+                if (type == "parallel")
+                {
+                    
+                }
+                else if (type == "perspective")
+                {
+                    
+                }
             }
             else
             {
                 //Clip to back edge
-                
+                if (type == "parallel")
+                {
+                    
+                }
+                else if (type == "perspective")
+                {
+                    
+                }
             }
             
             //Recalculate outcode
