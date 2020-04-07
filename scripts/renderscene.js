@@ -110,7 +110,12 @@ function Animate(timestamp) {
     {
         for (let j = 0; j < scene.models[i].edges.length; j++)
         {
-            clipLine(scene.models[i].edges[j], scene.view.type);
+            for (let k = 0; k < scene.models[i].edges[j].length - 1; k++)
+            {
+                vertex0 = scene.models[i].vertices[scene.models[i].edges[j][k]];
+                vertex1 = scene.models[i].vertices[scene.models[i].edges[j][k+1]];
+                clipLine(vertex0, vertex1, scene.view.type);
+            }
         }
     }
     
@@ -148,13 +153,12 @@ function DrawScene() {
     {
         for (let j = 0; j < scene.models[i].edges.length; j++)
         {
-            var pt1 = scene.models[i].edges[j][0];
-            var pt2 = scene.models[i].edges[j][1];
-            //console.log(scene.models[i].vertices[pt1].x);
-            //console.log(scene.models[i].vertices[pt1].y);
-            //console.log(scene.models[i].vertices[pt2].x);
-            //console.log(scene.models[i].vertices[pt2].y)
-            DrawLine(scene.models[i].vertices[pt1].x, scene.models[i].vertices[pt1].y, scene.models[i].vertices[pt2].x, scene.models[i].vertices[pt2].y);
+            for (let k = 0; k < scene.models[i].edges[j].length - 1; k++)
+            {
+                var pt1 = scene.models[i].edges[j][k];
+                var pt2 = scene.models[i].edges[j][k+1];
+                DrawLine(scene.models[i].vertices[pt1].x, scene.models[i].vertices[pt1].y, scene.models[i].vertices[pt2].x, scene.models[i].vertices[pt2].y);
+            }
         }
     }
     
@@ -163,7 +167,7 @@ function DrawScene() {
 function outcode(vector, type)
 {
     var outcode = 0;
-    var z; // = ??
+    var z = vector.z;
     var zmin; // = ??
     if (type == "parallel")
     {
@@ -186,13 +190,88 @@ function outcode(vector, type)
     return outcode;
 }
 
-function clipLine(edge, type)
+//Largely based from the text
+function clipLine(vertex0, vertex1, type)
 {
-    var vertex0;
-    var vertex1;
-    var out0;
-    var out1;
+    var out0 = outcode(vertex0, type);
+    var out1 = outcode(vertex1, type);
+    var t;
+    var result;
+    var selectpt;
+    var selectout;
+    var done = false;
     
+    while (!done)
+    {
+        if ((out0 | out1) === 0)
+        {
+            //Trivial Accept
+            result = {pt0: vertex0, pt1: vertex1};
+            done = true;
+        }
+        else if ((out0 & out1) !== 0)
+        {
+            //Trivial Reject
+            result = null;
+            done = true;
+        }
+        else
+        {
+            //Select a vertex that's not 0
+            if (out0 !== 0)
+            {
+                selectpt = vertex0;
+                selectout = out0;
+            }
+            else
+            {
+                selectpt = vertex1;
+                selectout = out1;
+            }
+            
+            if ((selectout & LEFT) !== 0)
+            {
+                //Clip to left edge
+                
+            }
+            else if ((selectout & RIGHT) !== 0)
+            {
+                //Clip to right edge
+                
+            }
+            else if ((selectout & BOTTOM) !== 0)
+            {
+                //Clip to bottom edge
+                
+            }
+            else if ((selectout & TOP) !== 0)
+            {
+                //Clip to top edge
+                
+            }
+            else if ((selectout & FRONT) !== 0)
+            {
+                //Clip to front edge
+                
+            }
+            else
+            {
+                //Clip to back edge
+                
+            }
+            
+            //Recalculate outcode
+            if (selectout === out0)
+            {
+                out0 = outcode(selectpt, type);
+            }
+            else
+            {
+                out1 = outcode(selectpt, type);
+            }
+        }
+    }
+    return result;
 }
 
 // Called when user selects a new scene JSON file
