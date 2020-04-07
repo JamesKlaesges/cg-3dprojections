@@ -110,7 +110,7 @@ function Animate(timestamp) {
     {
         for (let j = 0; j < scene.models[i].edges.length; j++)
         {
-            clipLine(scene.models[i].edges[j]);
+            clipLine(scene.models[i].edges[j], scene.view.type);
         }
     }
     
@@ -160,24 +160,38 @@ function DrawScene() {
     
 }
 
-function outcode(vector)
+function outcode(vector, type)
 {
     var outcode = 0;
-    if (vector.x < view.x_min) { outcode += LEFT; }
-    else if (vector.x > view.x_max) { outcode += RIGHT; }
-    if (vector.y < view.y_min) { outcode += BOTTOM; }
-    else if (vector.y > view.y_max) { outcode += TOP; }
-    if (vector.z < view.z_min) { outcode += FRONT; }
-    else if (vector.z > view.z_max) { outcode += BACK; }
-    
+    var z; // = ??
+    var zmin; // = ??
+    if (type == "parallel")
+    {
+        if (vector.x < -1) { outcode += LEFT; }
+        else if (vector.x > 1) { outcode += RIGHT; }
+        if (vector.y < -1) { outcode += BOTTOM; }
+        else if (vector.y > 1) { outcode += TOP; }
+        if (vector.z < 0) { outcode += FRONT; }
+        else if (vector.z > -1) { outcode += BACK; }
+    }
+    else if (type == "perspective")
+    {
+        if (vector.x < z) { outcode += LEFT; }
+        else if (vector.x > -z) { outcode += RIGHT; }
+        if (vector.y < z) { outcode += BOTTOM; }
+        else if (vector.y > -z) { outcode += TOP; }
+        if (vector.z < zmin) { outcode += FRONT; }
+        else if (vector.z > -1) { outcode += BACK; }
+    }
     return outcode;
 }
 
-function clipLine(edge)
+function clipLine(edge, type)
 {
-    console.log(view)
-    //var boundingPlane = [-1, 1, -1, 1, 0, -1];
-    //var boundingPlane = [z, -z, z, -z, zmin, -1];
+    var vertex0;
+    var vertex1;
+    var out0;
+    var out1;
     
 }
 
