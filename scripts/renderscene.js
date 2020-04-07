@@ -92,13 +92,15 @@ function Animate(timestamp) {
             Mat4x4Projection(scene.models[i].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);    
         }
     }
+    
+    console.log(scene.models[0].matrix);
+    
     //Multiply vertices with transformation matrix
     for (let i = 0; i < scene.models.length; i++)
     {
         for (let j = 0; j < scene.models[i].vertices.length; j++)
         {
             var vertex = Matrix.multiply([scene.models[i].matrix, scene.models[i].vertices[j]]);
-            console.log(scene.models[i].matrix);
             scene.models[i].vertices[j] = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
         }
     }
