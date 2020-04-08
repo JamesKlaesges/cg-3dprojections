@@ -71,8 +71,10 @@ function Animate(timestamp) {
     // step 2: transform models based on time
     // step 3: draw scene
     // step 4: request next animation frame (recursively calling same function)
-
-
+    
+    //Clear scene
+    ctx.clearRect(0, 0, view.width, view.height);
+    
     var time = timestamp - start_time;
 
     // -----Step 2: Transform Models-----
@@ -137,8 +139,6 @@ function Animate(timestamp) {
 // Main drawing code - use information contained i0n variable `scene`
 function DrawScene(result) {
     console.log(scene);
-    //Clear scene
-    ctx.clearRect(0, 0, view.width, view.height);
     
     //Multiply vertices by Mpar or Mper matrix
     var Mpar = new Matrix(4,4);
