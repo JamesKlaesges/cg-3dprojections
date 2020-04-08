@@ -124,56 +124,10 @@ function Animate(timestamp) {
                 
                 if (result != null)
                 {
-                    //Insert new vertices
-                    //scene.models[i].vertices[scene.models[i].edges[j][k]] = result.pt0;
-                    //scene.models[i].vertices[scene.models[i].edges[j][k+1]] = result.pt1;
-                }
-                else
-                {
-                    //Reject   
-                    // How to delete/modify edges?
-                    
+                    //Draw Line
+                    DrawScene(result);
                 }
             }
-        }
-    }
-    
-    //Multiply vertices by Mpar or Mper matrix
-    var Mpar = new Matrix(4,4);
-    Mat4x4MPar(Mpar);
-    var Mper = new Matrix(4,4);
-    Mat4x4MPer(Mper);
-    for (let i = 0; i < scene.models.length; i++)
-    {
-        for (let j = 0; j < scene.models[i].vertices.length; j++)
-        {
-            if (scene.view.type == "parallel")
-            {
-                var vertex = Matrix.multiply([Mpar, scene.models[i].vertices[j]]);
-                scene.models[i].vertices[j] = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
-            }
-            else if (scene.view.type == "perspective")
-            {
-                var vertex = Matrix.multiply([Mper, scene.models[i].vertices[j]]);
-                scene.models[i].vertices[j] = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
-            }
-        }
-    }
-    
-    
-    //Project onto view plane
-    var projectionMatrix = new Matrix(4,4);
-    projectionMatrix.values = [[400, 0, 0, 400],
-                               [0, 300, 0, 300],
-                               [0, 0, 1, 0],
-                               [0, 0, 0, 1]];
-    
-    for (let i = 0; i < scene.models.length; i++)
-    {
-        for (let j = 0; j < scene.models[i].vertices.length; j++)
-        {
-            var vertex = Matrix.multiply([projectionMatrix, scene.models[i].vertices[j]]);
-            scene.models[i].vertices[j] = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
         }
     }
     
@@ -183,27 +137,47 @@ function Animate(timestamp) {
 }
 
 // Main drawing code - use information contained i0n variable `scene`
-function DrawScene() {
+function DrawScene(result) {
     console.log(scene);
     //Clear scene
     //view = document.getElementById('view');
     //ctx.clearRect(0, 0, view.width, view.height);
     
-    //Draw 2D lines for each edge
-    for (let i = 0; i < scene.models.length; i++)
+    //Multiply vertices by Mpar or Mper matrix
+    var Mpar = new Matrix(4,4);
+    Mat4x4MPar(Mpar);
+    var Mper = new Matrix(4,4);
+    Mat4x4MPer(Mper);
+    if (scene.view.type == "parallel")
     {
-        for (let j = 0; j < scene.models[i].edges.length; j++)
-        {
-            for (let k = 0; k < scene.models[i].edges[j].length - 1; k++)
-            {
-                var pt1 = scene.models[i].edges[j][k];
-                var pt2 = scene.models[i].edges[j][k+1];
-                console.log(scene.models[i].vertices[pt1]);
-                console.log(scene.models[i].vertices[pt2]);
-                DrawLine(scene.models[i].vertices[pt1].x, scene.models[i].vertices[pt1].y, scene.models[i].vertices[pt2].x, scene.models[i].vertices[pt2].y);
-            }
-        }
+        var vertex0 = Matrix.multiply([Mpar, result.pt0]);
+        result.pt0 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+        var vertex1 = Matrix.multiply([Mpar, result.pt1]);
+        result.pt1 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
     }
+    else if (scene.view.type == "perspective")
+    {
+        var vertex0 = Matrix.multiply([Mper, result.pt0]);
+        result.pt0 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+        var vertex1 = Matrix.multiply([Mper, result.pt1]);
+        result.pt1 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+    }
+
+     //Project onto view plane
+    var projectionMatrix = new Matrix(4,4);
+    projectionMatrix.values = [[400, 0, 0, 400],
+                               [0, 300, 0, 300],
+                               [0, 0, 1, 0],
+                               [0, 0, 0, 1]];
+    
+    var vertex0 = Matrix.multiply([projectionMatrix, result.pt0]);
+    result.pt0 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+    var vertex1 = Matrix.multiply([projectionMatrix, result.pt1]);
+    result.pt1 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+    
+    //Draw 2D lines for each edge
+    console.log(result);
+    DrawLine(result.pt0.x, result.pt0.y, result.pt1.x, result.pt1.y);
     
 }
 
