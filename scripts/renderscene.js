@@ -149,16 +149,16 @@ function DrawScene(result) {
     if (scene.view.type == "parallel")
     {
         var vertex0 = Matrix.multiply([Mpar, result.pt0]);
-        result.pt0 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+        result.pt0 = Vector4(vertex0.x, vertex0.y, vertex0.z, vertex0.w);
         var vertex1 = Matrix.multiply([Mpar, result.pt1]);
-        result.pt1 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+        result.pt1 = Vector4(vertex1.x, vertex1.y, vertex1.z, vertex1.w);
     }
     else if (scene.view.type == "perspective")
     {
         var vertex0 = Matrix.multiply([Mper, result.pt0]);
-        result.pt0 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+        result.pt0 = Vector4(vertex0.x, vertex0.y, vertex0.z, vertex0.w);
         var vertex1 = Matrix.multiply([Mper, result.pt1]);
-        result.pt1 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+        result.pt1 = Vector4(vertex1.x, vertex1.y, vertex1.z, vertex1.w);
     }
 
      //Project onto view plane
@@ -169,9 +169,9 @@ function DrawScene(result) {
                                [0, 0, 0, 1]];
     
     var vertex0 = Matrix.multiply([projectionMatrix, result.pt0]);
-    result.pt0 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+    result.pt0 = Vector4(vertex0.x, vertex0.y, vertex0.z, vertex0.w);
     var vertex1 = Matrix.multiply([projectionMatrix, result.pt1]);
-    result.pt1 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+    result.pt1 = Vector4(vertex1.x, vertex1.y, vertex1.z, vertex1.w);
     
     //Draw 2D lines for each edge
     console.log(result);
