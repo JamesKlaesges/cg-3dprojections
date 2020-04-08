@@ -216,6 +216,8 @@ function clipLine(vertex0, vertex1, type, zmin)
     
     while (!done)
     {
+        console.log(vertex0);
+        console.log(vertex1);
         if ((out0 | out1) === 0)
         {
             //Trivial Accept
