@@ -115,7 +115,19 @@ function Animate(timestamp) {
             {
                 vertex0 = scene.models[i].vertices[scene.models[i].edges[j][k]];
                 vertex1 = scene.models[i].vertices[scene.models[i].edges[j][k+1]];
-                clipLine(vertex0, vertex1, scene.view.type, zmin);
+                var result = clipLine(vertex0, vertex1, scene.view.type, zmin);
+                
+                if (result != null)
+                {
+                    //Insert new vertices
+                    scene.models[i].vertices[scene.models[i].edges[j][k]] = result.pt0;
+                    scene.models[i].vertices[scene.models[i].edges[j][k+1]] = result.pt1;
+                }
+                else
+                {
+                    //Reject   
+                    
+                }
             }
         }
     }
@@ -234,11 +246,17 @@ function clipLine(vertex0, vertex1, type, zmin)
                 //Clip to left edge
                 if (type == "parallel")
                 {
-                    
+                    t = (-1 - vertex0.x)/(vertex1.x - vertex0.x);
+                    selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
+                    selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.x = -1;
                 }
                 else if (type == "perspective")
                 {
-                    
+                    t = (-vertex0.x + vertex0.z)/((vertex1.x - vertex0.x) - (vertex1.z - vertex0.z));
+                    selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
+                    selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
+                    selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
                 }
                 
             }
@@ -247,11 +265,17 @@ function clipLine(vertex0, vertex1, type, zmin)
                 //Clip to right edge
                 if (type == "parallel")
                 {
-                    
+                    t = (1 - vertex0.x)/(vertex1.x - vertex0.x);
+                    selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
+                    selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.x = 1;
                 }
                 else if (type == "perspective")
                 {
-                    
+                    t = (vertex0.x + vertex0.z)/(-(vertex1.x - vertex0.x) - (vertex1.z - vertex0.z));
+                    selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
+                    selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
+                    selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
                 }
             }
             else if ((selectout & BOTTOM) !== 0)
@@ -259,11 +283,17 @@ function clipLine(vertex0, vertex1, type, zmin)
                 //Clip to bottom edge
                 if (type == "parallel")
                 {
-                    
+                    t = (-1 - vertex0.y)/(vertex1.y - vertex0.y);
+                    selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
+                    selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.y = -1;
                 }
                 else if (type == "perspective")
                 {
-                    
+                    t = (-vertex0.y + vertex0.z)/((vertex1.y - vertex0.y) - (vertex1.z - vertex0.z));
+                    selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
+                    selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
+                    selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
                 }
             }
             else if ((selectout & TOP) !== 0)
@@ -271,11 +301,17 @@ function clipLine(vertex0, vertex1, type, zmin)
                 //Clip to top edge
                 if (type == "parallel")
                 {
-                    
+                    t = (1 - vertex0.y)/(vertex1.y - vertex0.y);
+                    selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
+                    selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.y = 1;
                 }
                 else if (type == "perspective")
                 {
-                    
+                    t = (vertex0.y + vertex0.z)/(-(vertex1.y - vertex0.y) - (vertex1.z - vertex0.z));
+                    selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
+                    selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
+                    selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
                 }
             }
             else if ((selectout & FRONT) !== 0)
@@ -283,11 +319,17 @@ function clipLine(vertex0, vertex1, type, zmin)
                 //Clip to front edge
                 if (type == "parallel")
                 {
-                    
+                    t = (0 - vertex0.z)/(vertex1.z - vertex0.z);
+                    selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
+                    selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
+                    selectpt.z = 0;
                 }
                 else if (type == "perspective")
                 {
-                    
+                    t = (vertex0.z - zmin)/(-(vertex1.z - vertex0.z));
+                    selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
+                    selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
+                    selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
                 }
             }
             else
@@ -295,11 +337,17 @@ function clipLine(vertex0, vertex1, type, zmin)
                 //Clip to back edge
                 if (type == "parallel")
                 {
-                    
+                    t = (-1 - vertex0.z)/(vertex1.z - vertex0.z);
+                    selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
+                    selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
+                    selectpt.z = -1;
                 }
                 else if (type == "perspective")
                 {
-                    
+                    t = (-vertex0.z - 1)/(vertex1.z - vertex0.z);
+                    selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
+                    selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
+                    selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
                 }
             }
             
@@ -307,10 +355,12 @@ function clipLine(vertex0, vertex1, type, zmin)
             if (selectout === out0)
             {
                 out0 = outcode(selectpt, type);
+                vertex0 = selectpt;
             }
             else
             {
                 out1 = outcode(selectpt, type);
+                vertex1 = selectpt;
             }
         }
     }
