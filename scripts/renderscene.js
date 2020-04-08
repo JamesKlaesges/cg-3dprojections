@@ -130,8 +130,6 @@ function Animate(timestamp) {
             }
         }
     }
-    
-    DrawScene();
 
     window.requestAnimationFrame(Animate);
 }
