@@ -120,8 +120,8 @@ function Animate(timestamp) {
             {
                 vertex0 = scene.models[i].vertices[scene.models[i].edges[j][k]];
                 vertex1 = scene.models[i].vertices[scene.models[i].edges[j][k+1]];
-                var result = clipLine(vertex0, vertex1, scene.view.type, zmin);
-                
+                //var result = clipLine(vertex0, vertex1, scene.view.type, zmin);
+                result = {pt0: vertex0, pt1: vertex1};
                 if (result != null)
                 {
                     //Draw Line
