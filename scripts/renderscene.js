@@ -186,8 +186,8 @@ function Animate(timestamp) {
 function DrawScene() {
     console.log(scene);
     //Clear scene
-    view = document.getElementById('view');
-    ctx.clearRect(0, 0, view.width, view.height);
+    //view = document.getElementById('view');
+    //ctx.clearRect(0, 0, view.width, view.height);
     
     //Draw 2D lines for each edge
     for (let i = 0; i < scene.models.length; i++)
