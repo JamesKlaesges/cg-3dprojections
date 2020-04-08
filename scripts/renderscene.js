@@ -358,12 +358,12 @@ function clipLine(vertex0, vertex1, type, zmin)
             if (selectout === out0)
             {
                 out0 = outcode(selectpt, type, zmin);
-                vertex0 = selectpt;
+                vertex0.values = selectpt.values;
             }
             else
             {
                 out1 = outcode(selectpt, type, zmin);
-                vertex1 = selectpt;
+                vertex1.values = selectpt.values;
             }
         }
     }
