@@ -93,8 +93,6 @@ function Animate(timestamp) {
         }
     }
     
-    console.log(scene.models[0].matrix);
-    
     //Multiply vertices with transformation matrix
     for (let i = 0; i < scene.models.length; i++)
     {
@@ -120,8 +118,8 @@ function Animate(timestamp) {
                 if (result != null)
                 {
                     //Insert new vertices
-                    scene.models[i].vertices[scene.models[i].edges[j][k]] = result.pt0;
-                    scene.models[i].vertices[scene.models[i].edges[j][k+1]] = result.pt1;
+                    //scene.models[i].vertices[scene.models[i].edges[j][k]] = result.pt0;
+                    //scene.models[i].vertices[scene.models[i].edges[j][k+1]] = result.pt1;
                 }
                 else
                 {
@@ -170,6 +168,8 @@ function DrawScene() {
             {
                 var pt1 = scene.models[i].edges[j][k];
                 var pt2 = scene.models[i].edges[j][k+1];
+                console.log(scene.models[i].vertices[pt1]);
+                console.log(scene.models[i].vertices[pt2]);
                 DrawLine(scene.models[i].vertices[pt1].x, scene.models[i].vertices[pt1].y, scene.models[i].vertices[pt2].x, scene.models[i].vertices[pt2].y);
             }
         }
