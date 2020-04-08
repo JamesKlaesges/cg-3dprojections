@@ -131,6 +131,29 @@ function Animate(timestamp) {
         }
     }
     
+    //Multiply vertices by Mpar or Mper matrix
+    var Mpar = new Matrix(4,4);
+    Mat4x4MPar(Mpar);
+    var Mper = new Matrix(4,4);
+    Mat4x4MPer(Mper);
+    for (let i = 0; i < scene.models.length; i++)
+    {
+        for (let j = 0; j < scene.models[i].vertices.length; j++)
+        {
+            if (scene.view.type == "parallel")
+            {
+                var vertex = Matrix.multiply([Mpar, scene.models[i].vertices[j]]);
+                scene.models[i].vertices[j] = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+            }
+            else if (scene.view.type == "perspective")
+            {
+                var vertex = Matrix.multiply([Mper, scene.models[i].vertices[j]]);
+                scene.models[i].vertices[j] = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+            }
+        }
+    }
+    
+    
     //Project onto view plane
     var projectionMatrix = new Matrix(4,4);
     projectionMatrix.values = [[400, 0, 0, 400],
