@@ -138,7 +138,7 @@ function Animate(timestamp) {
 function DrawScene(result) {
     console.log(scene);
     //Clear scene
-    //ctx.clearRect(0, 0, view.width, view.height);
+    ctx.clearRect(0, 0, view.width, view.height);
     
     //Multiply vertices by Mpar or Mper matrix
     var Mpar = new Matrix(4,4);
