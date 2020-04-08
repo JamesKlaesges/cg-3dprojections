@@ -77,29 +77,36 @@ function Animate(timestamp) {
 
     // -----Step 2: Transform Models-----
     
-    //Calculate transformation matrix to transform models into canonical view volume
     if (scene.view.type == "parallel")
     {
         for (let i = 0; i < scene.models.length; i++)
         {
+            //Calculate transformation matrix to transform models into canonical view volume
             Mat4x4Parallel(scene.models[i].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);
+            
+            //Multiply vertices with transformation matrix
+            for (let j = 0; j < scene.models[i].vertices.length; j++)
+            {
+                var vertex = Matrix.multiply([scene.models[i].matrix, scene.models[i].vertices[j]]);
+                scene.models[i].vertices[j] = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+            }
+            
         }
     }
     else if (scene.view.type == "perspective")
     {
         for (let i = 0; i < scene.models.length; i++)
         {
-            Mat4x4Projection(scene.models[i].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);    
-        }
-    }
-    
-    //Multiply vertices with transformation matrix
-    for (let i = 0; i < scene.models.length; i++)
-    {
-        for (let j = 0; j < scene.models[i].vertices.length; j++)
-        {
-            var vertex = Matrix.multiply([scene.models[i].matrix, scene.models[i].vertices[j]]);
-            scene.models[i].vertices[j] = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+            //Calculate transformation matrix to transform models into canonical view volume
+            Mat4x4Projection(scene.models[i].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);
+            
+            //Multiply vertices with transformation matrix
+            for (let j = 0; j < scene.models[i].vertices.length; j++)
+            {
+                var vertex = Matrix.multiply([scene.models[i].matrix, scene.models[i].vertices[j]]);
+                scene.models[i].vertices[j] = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+            }
+            
         }
     }
     
