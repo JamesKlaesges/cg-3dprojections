@@ -174,7 +174,7 @@ function DrawScene(result) {
     
     //Draw 2D lines for each edge
     console.log(result);
-    DrawLine(result.pt0.x, result.pt0.y, result.pt1.x, result.pt1.y);
+    DrawLine(result.pt0.x/result.pt0.w, result.pt0.y/result.pt0.w, result.pt1.x/result.pt1.w, result.pt1.y/result.pt1.w);
     
 }
 
