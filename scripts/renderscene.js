@@ -126,6 +126,7 @@ function Animate(timestamp) {
                 else
                 {
                     //Reject   
+                    // How to delete/modify edges?
                     
                 }
             }
@@ -145,7 +146,6 @@ function Animate(timestamp) {
         {
             var vertex = Matrix.multiply([projectionMatrix, scene.models[i].vertices[j]]);
             scene.models[i].vertices[j] = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
-            //console.log(scene.models[i].vertices[j]);
         }
     }
     
@@ -202,7 +202,6 @@ function outcode(vector, type, zmin)
     return outcode;
 }
 
-//Largely based from the text
 function clipLine(vertex0, vertex1, type, zmin)
 {
     var out0 = outcode(vertex0, type, zmin);
@@ -432,8 +431,8 @@ function OnKeyDown(event) {
             break;
         case 40: // DOWN Arrow
             console.log("down");
-            scene.view.subtract(n); 
-            scene.view.subtract(n); 
+            scene.view.prp.subtract(n); 
+            scene.view.srp.subtract(n); 
             DrawScene(); 
             break;
     }
