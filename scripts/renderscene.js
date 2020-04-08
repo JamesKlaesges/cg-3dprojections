@@ -120,8 +120,8 @@ function Animate(timestamp) {
             {
                 vertex0 = scene.models[i].vertices[scene.models[i].edges[j][k]];
                 vertex1 = scene.models[i].vertices[scene.models[i].edges[j][k+1]];
-                var result = clipLine(vertex0, vertex1, scene.view.type, zmin);
-                //result = {pt0: vertex0, pt1: vertex1};
+                //var result = clipLine(vertex0, vertex1, scene.view.type, zmin);
+                result = {pt0: vertex0, pt1: vertex1};
                 if (result != null)
                 {
                     //Draw Line
@@ -138,7 +138,7 @@ function Animate(timestamp) {
 function DrawScene(result) {
     console.log(scene);
     //Clear scene
-    ctx.clearRect(0, 0, view.width, view.height);
+    //ctx.clearRect(0, 0, view.width, view.height);
     
     //Multiply vertices by Mpar or Mper matrix
     var Mpar = new Matrix(4,4);
