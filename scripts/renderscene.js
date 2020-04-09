@@ -396,25 +396,30 @@ function OnKeyDown(event) {
             console.log("left");
             scene.view.prp.subtract(u); 
             scene.view.srp.subtract(u); 
+            console.log(scene.view.prp);
+            console.log(scene.view.srp);
             
             break;
         case 38: // UP Arrow
             console.log("up");
             scene.view.prp.add(n); 
             scene.view.srp.add(n); 
-
+            console.log(scene.view.prp);
+            console.log(scene.view.srp);
             break;
         case 39: // RIGHT Arrow
             console.log("right");
             scene.view.prp.add(u); 
             scene.view.srp.add(u); 
-
+            console.log(scene.view.prp);
+            console.log(scene.view.srp);
             break;
         case 40: // DOWN Arrow
             console.log("down");
             scene.view.prp.subtract(n); 
             scene.view.srp.subtract(n); 
-
+            console.log(scene.view.prp);
+            console.log(scene.view.srp);
             break;
     }
 }
