@@ -438,7 +438,7 @@ function LoadNewScene() {
                     {
                          scene.models[i].edges.push([k, scene.models[i].vertices[scene.models[i].vertices.length-1]]);
                     }
-                    
+                    console.log(scene);
                 }
                 else if (scene.models[i].type === 'cylinder')
                 {
