@@ -392,6 +392,7 @@ function LoadNewScene() {
                     var vertex6 = Vector4(center.x + width/2, center.y + height/2, center.z + depth/2, center.w);
                     var vertex7 = Vector4(center.x - width/2, center.y + height/2, center.z + depth/2, center.w);
                     
+                    scene.models[i].vertices = [];
                     scene.models[i].vertices.push(vertex0);
                     scene.models[i].vertices.push(vertex1);
                     scene.models[i].vertices.push(vertex2);
@@ -402,6 +403,7 @@ function LoadNewScene() {
                     scene.models[i].vertices.push(vertex7);
                     
                     //Create edges
+                    scene.models[i].edges = [];
                     scene.models[i].edges.push([0, 3, 2, 1]);
                     scene.models[i].edges.push([4, 7, 6, 5]);
                     scene.models[i].edges.push([0, 4]);
