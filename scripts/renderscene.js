@@ -424,7 +424,7 @@ function LoadNewScene() {
                     scene.models[i].vertices.push(vector);
                     for (let k = 0; k < numSides; k++) 
                     {
-                        vector = Vector4(center.x + (radius * Math.cos(currentAngle)), center.y + (radius * Math.sin(currentAngle)),center.z + (radius * Math.tan(currentAngle)), center.w);
+                        vector = Vector4(center.x + (radius * Math.cos(currentAngle*0.0174533)), center.y + (radius * Math.sin(currentAngle*0.0174533)), center.z + (radius * Math.tan(currentAngle*0.0174533)), center.w);
                         currentAngle = currentAngle + angle;
                         scene.models[i].vertices.push(vector);
                     }
@@ -443,7 +443,7 @@ function LoadNewScene() {
                     currentAngle = angle; 
                     for (let k = 0; k < numSides; k++) 
                     {
-                        vector = Vector4(center.x + (radius * Math.cos(currentAngle)), center.y + height + (radius * Math.sin(currentAngle)), center.z + (radius * Math.tan(currentAngle)), center.w);
+                        vector = Vector4(center.x + (radius * Math.cos(currentAngle*0.0174533)), center.y + height + (radius * Math.sin(currentAngle*0.0174533)), center.z + (radius * Math.tan(currentAngle*0.0174533)), center.w);
                         currentAngle = currentAngle + angle;
                         scene.models[i].vertices.push(vector);
                     }
