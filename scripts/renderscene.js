@@ -352,8 +352,6 @@ function clipLine(vertex0, vertex1, type, zmin)
 function LoadNewScene() {
     var scene_file = document.getElementById('scene_file');
 
-    console.log(scene_file.files[0]);
-
     var reader = new FileReader();
     reader.onload = (event) => {
         scene = JSON.parse(event.target.result);
@@ -392,20 +390,12 @@ function LoadNewScene() {
                     var vertex6 = Vector4(center.x + width/2, center.y + height/2, center.z + depth/2, center.w);
                     var vertex7 = Vector4(center.x - width/2, center.y + height/2, center.z + depth/2, center.w);
                     
-                    scene.models[i].vertices = [];
-                    scene.models[i].vertices.push(vertex0);
-                    scene.models[i].vertices.push(vertex1);
-                    scene.models[i].vertices.push(vertex2);
-                    scene.models[i].vertices.push(vertex3);
-                    scene.models[i].vertices.push(vertex4);
-                    scene.models[i].vertices.push(vertex5);
-                    scene.models[i].vertices.push(vertex6);
-                    scene.models[i].vertices.push(vertex7);
+                    scene.models[i].vertices = [vertex0, vertex1, vertex2, vertex3, vertex4, vertex5, vertex6, vertex7];
                     
                     //Create edges
                     scene.models[i].edges = [];
-                    scene.models[i].edges.push([0, 3, 2, 1]);
-                    scene.models[i].edges.push([4, 7, 6, 5]);
+                    scene.models[i].edges.push([0, 3, 2, 1, 0]);
+                    scene.models[i].edges.push([4, 7, 6, 5, 4]);
                     scene.models[i].edges.push([0, 4]);
                     scene.models[i].edges.push([1, 5]);
                     scene.models[i].edges.push([3, 7]);
