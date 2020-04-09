@@ -172,8 +172,8 @@ function outcode(vector, type, zmin)
         else if (vector.x > 1)  { outcode += RIGHT; }
         if (vector.y < -1)      { outcode += BOTTOM; }
         else if (vector.y > 1)  { outcode += TOP; }
-        if (vector.z < 0)       { outcode += FRONT; }
-        else if (vector.z > -1) { outcode += BACK; }
+        if (vector.z > 0)       { outcode += FRONT; }
+        else if (vector.z < -1) { outcode += BACK; }
     }
     else if (type == "perspective")
     {
