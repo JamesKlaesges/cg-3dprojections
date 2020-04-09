@@ -107,8 +107,8 @@ function Animate(timestamp) {
                 vertex1 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
                 
                 //3D Line Clipping
-                //var result = clipLine(vertex0, vertex1, scene.view.type, zmin);
-                result = {pt0: vertex0, pt1: vertex1};
+                var result = clipLine(vertex0, vertex1, scene.view.type, zmin);
+                //result = {pt0: vertex0, pt1: vertex1};
                 if (result != null)
                 {
                     //Draw Line
