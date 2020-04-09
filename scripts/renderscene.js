@@ -411,20 +411,20 @@ function LoadNewScene() {
                 }
                 else if (scene.models[i].type === 'cylinder')
                 {
-                    //Create vertices for bottom half
                     var radius = scene.models[i].radius;
                     var height = scene.models[i].height;
                     var numSides = scene.models[i].sides;
                     var center = scene.models[i].center;
                     var angle = 360/numSides;
                     var currentAngle = angle; 
-                    
                     scene.models[i].vertices = [];
+                    
+                    //Create vertices for bottom half
                     var vector = Vector4(center.x + radius, center.y, center.z, center.w);
                     scene.models[i].vertices.push(vector);
                     for (let k = 0; k < numSides; k++) 
                     {
-                        vector = Vector4(center.x + (radius * Math.cos(currentAngle*0.0174533)), center.y + (radius * Math.sin(currentAngle*0.0174533)), center.z + (radius * Math.tan(currentAngle*0.0174533)), center.w);
+                        vector = Vector4(center.x + (radius * Math.cos(currentAngle*0.0174533)), center.y - height + (radius * Math.sin(currentAngle*0.0174533)), center.z + (radius * Math.tan(currentAngle*0.0174533)), center.w);
                         currentAngle = currentAngle + angle;
                         scene.models[i].vertices.push(vector);
                     }
