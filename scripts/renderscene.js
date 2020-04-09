@@ -451,11 +451,11 @@ function LoadNewScene() {
                     //Create edges for top half
                     for (let k = j; k < scene.models[i].vertices.length-1; k++)
                     {
-                         scene.models[i].edges.push([i, i+1]);
+                         scene.models[i].edges.push([k, k+1]);
                     }
                     
                     //Create edges for in between the two circles
-                    for (let k = 0; k < j; k++)
+                    for (let k = 0; k < j-1; k++)
                     {
                         scene.models[i].edges.push([k, j]);
                         j = j+1;
