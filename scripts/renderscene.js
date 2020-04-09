@@ -181,8 +181,8 @@ function outcode(vector, type, zmin)
         else if (vector.x > -z) { outcode += RIGHT; }
         if (vector.y < z)       { outcode += BOTTOM; }
         else if (vector.y > -z) { outcode += TOP; }
-        if (vector.z < zmin)    { outcode += FRONT; }
-        else if (vector.z > -1) { outcode += BACK; }
+        if (vector.z > zmin)    { outcode += FRONT; }
+        else if (vector.z < -1) { outcode += BACK; }
     }
     return outcode;
 }
