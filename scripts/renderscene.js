@@ -411,10 +411,57 @@ function LoadNewScene() {
                 }
                 else if (scene.models[i].type === 'cylinder')
                 {
-                    //Create vertices
+                    //Create vertices for bottom half
+                    var radius = scene.models[i].radius;
+                    var height = scene.models[i].height;
+                    var numSides = scene.models[i].sides;
+                    var center = scene.models[i].center;
+                    var angle = 360/num_points;
+                    var currentAngle = angle; 
                     
-                    //Create edges
+                    scene.models[i].vertices = [];
+                    var vector = Vector4(center.x + radius, center.y, center.z, center.w);
+                    scene.models[i].vertices.push(vector);
+                    for (let i = 0; i < numSides; i++) 
+                    {
+                        vector = Vector4(center.x + Math.round(radius * Math.cos(currentAngle*0.0174533)), center.y + Math.round(radius * Math.sin(currentAngle*0.0174533)), center.w);
+                        currentAngle = currentAngle + angle;
+                        scene.models[i].vertices.push(vector);
+                    }
+                    
+                    //Create edges for bottom half
                     scene.models[i].edges = [];
+                    for (let i = 0; i < scene.models[i].vertices.length-1; i++)
+                    {
+                         scene.models[i].edges.push([i, i+1]);
+                    }
+                    var j = scene.models[i].vertices.length;
+                    
+                    //Create vertices for top half
+                    vector = Vector4(center.x + radius, center.y + height, center.z, center.w);
+                    scene.models[i].vertices.push(vector);
+                    currentAngle = angle; 
+                    for (let i = 0; i < numSides; i++) 
+                    {
+                        vector = Vector4(center.x + Math.round(radius * Math.cos(currentAngle*0.0174533)), center.y + Math.round(radius * Math.sin(currentAngle*0.0174533)), center.w);
+                        currentAngle = currentAngle + angle;
+                        scene.models[i].vertices.push(vector);
+                    }
+                    
+                    //Create edges for top half
+                    for (let i = 0; i < scene.models[i].vertices.length-1; i++)
+                    {
+                         scene.models[i].edges.push([i, i+1]);
+                    }
+                    
+                    //Create edges for in between the two circles
+                    for (let i = 0; i < j; i++)
+                    {
+                        scene.models[i].edges.push([i, j]);
+                        j = j+1;
+                    }
+                    console.log(scene);
+                    
                 }
                 else if (scene.models[i].type === 'sphere')
                 {
