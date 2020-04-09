@@ -144,18 +144,15 @@ function DrawScene(result) {
     }
     
      //Project onto view plane
-    if (scene.view.type == "perspective")
-    {
-        var projectionMatrix = new Matrix(4,4);
-        projectionMatrix.values = [[400, 0, 0, 400],
-                                   [0, 300, 0, 300],
-                                   [0, 0, 1, 0],
-                                   [0, 0, 0, 1]];
-        var vertex0 = Matrix.multiply([projectionMatrix, result.pt0]);
-        result.pt0 = Vector4(vertex0.x, vertex0.y, vertex0.z, vertex0.w);
-        var vertex1 = Matrix.multiply([projectionMatrix, result.pt1]);
-        result.pt1 = Vector4(vertex1.x, vertex1.y, vertex1.z, vertex1.w);
-    }
+    var projectionMatrix = new Matrix(4,4);
+    projectionMatrix.values = [[400, 0, 0, 400],
+                               [0, 300, 0, 300],
+                               [0, 0, 1, 0],
+                               [0, 0, 0, 1]];
+    var vertex0 = Matrix.multiply([projectionMatrix, result.pt0]);
+    result.pt0 = Vector4(vertex0.x, vertex0.y, vertex0.z, vertex0.w);
+    var vertex1 = Matrix.multiply([projectionMatrix, result.pt1]);
+    result.pt1 = Vector4(vertex1.x, vertex1.y, vertex1.z, vertex1.w);
     
     //Draw 2D lines for each edge
     DrawLine(result.pt0.x/result.pt0.w, result.pt0.y/result.pt0.w, result.pt1.x/result.pt1.w, result.pt1.y/result.pt1.w);
