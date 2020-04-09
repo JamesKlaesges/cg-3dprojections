@@ -433,6 +433,7 @@ function LoadNewScene() {
             }
             scene.models[i].matrix = new Matrix(4, 4);
         }
+        console.log(scene);
     };
     reader.readAsText(scene_file.files[0], "UTF-8");
 }
