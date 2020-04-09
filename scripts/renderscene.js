@@ -493,10 +493,45 @@ function LoadNewScene() {
                 }
                 else if (scene.models[i].type === 'sphere')
                 {
-                    //Create vertices
+
+                    var center = scene.models[i].center; 
+                    var slices = scene.models[i].slices; 
+                    var stacks = scene.models[i].stacks; 
+                    var radius = scene.models[i].radius
+                    for( let k = 0; k < stacks; k++ ){
+                        var slice = []; 
+                        var theta_stack = Math.PI * slices / stacks * (k + 1); 
+                        var stack_radius = Math.sin(theta_stack) * radius; 
+                        var y_axis = center.y + model.radius*Math.cos(theta_stack); 
+                        //create vertexs.
+                        for( let l = 0; l < slices; l++ ){
+                            var theta_slice = Math.PI * 2 / model.slices * (l + 1); 
+                            var x = center.x + stack_radius * Math.cos( theta_slice );
+                            var z = center.z + center.z + stack_radius  * Math.sin( theta_slice ); 
+                            var vertex = new Vector4( x, y, z, 1 ); 
+                            scene.models[i].vertices.push( vertex ); 
+                            slice.push( k * model.slices + l);
+                        }
+                        //create edges 
+                        slice.push( k * model.slices ); 
+                        scene.models[i].edges.push(slice); 
+                    } 
+                
+
+                    //polar vertexs. 
+                    var top_vertex = new Vector4( center.x, center.y + radius, center.z, 1);
+                    var bottom_vertex = new Vector4( center.x, center.y-radius, center.z, 1); 
+                    scene.models[i].vertices.push( top_vertex); 
+                    scene.models[i].vertices.push( bototm_vertex); 
                     
-                    //Create edges
-                    scene.models[i].edges = [];
+                    for( let k = 0; k < slices; k++ ){
+                        var slice = [];
+                        slice.push( scene.models[i].vertices.length - 2); 
+                        for( let l = 0; l < stacks; l++ ){
+                            slice.push( l * stacks + k ); 
+                        }
+                        slice.push( scene.models[i].vertices.length - 1 );  
+                    }
                 }
             }
             scene.models[i].matrix = new Matrix(4, 4);
