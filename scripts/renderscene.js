@@ -455,14 +455,12 @@ function LoadNewScene() {
                     }
                     
                     //Create edges for in between the two circles
-                    j = j - 1;
                     var temp = j;
                     for (let k = 0; k < temp; k++)
                     {
                         scene.models[i].edges.push([k, j]);
                         j = j+1;
                     }
-                    console.log(scene);
                     
                 }
                 else if (scene.models[i].type === 'sphere')
