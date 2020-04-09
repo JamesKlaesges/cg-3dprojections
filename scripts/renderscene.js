@@ -417,23 +417,25 @@ function LoadNewScene() {
                     //Create vertices
                     
                     //Create edges
+                    scene.models[i].edges = [];
                 }
                 else if (scene.models[i].type === 'cylinder')
                 {
                     //Create vertices
                     
                     //Create edges
+                    scene.models[i].edges = [];
                 }
                 else if (scene.models[i].type === 'sphere')
                 {
                     //Create vertices
                     
                     //Create edges
+                    scene.models[i].edges = [];
                 }
             }
             scene.models[i].matrix = new Matrix(4, 4);
         }
-        console.log(scene);
     };
     reader.readAsText(scene_file.files[0], "UTF-8");
 }
