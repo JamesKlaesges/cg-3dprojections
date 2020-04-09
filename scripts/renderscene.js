@@ -394,28 +394,19 @@ function OnKeyDown(event) {
     switch (event.keyCode) {
         case 37: // LEFT Arrow
             scene.view.prp = scene.view.prp.subtract(u); 
-            scene.view.srp = scene.view.srp.subtract(u); 
-            console.log(scene.view.prp);
-            console.log(scene.view.srp);
-            
+            scene.view.srp = scene.view.srp.subtract(u);    
             break;
         case 38: // UP Arrow
             scene.view.prp = scene.view.prp.add(n); 
             scene.view.srp = scene.view.srp.add(n); 
-            console.log(scene.view.prp);
-            console.log(scene.view.srp);
             break;
         case 39: // RIGHT Arrow
             scene.view.prp = scene.view.prp.add(u); 
             scene.view.srp = scene.view.srp.add(u); 
-            console.log(scene.view.prp);
-            console.log(scene.view.srp);
             break;
         case 40: // DOWN Arrow
             scene.view.prp = scene.view.prp.subtract(n); 
             scene.view.srp = scene.view.srp.subtract(n); 
-            console.log(scene.view.prp);
-            console.log(scene.view.srp);
             break;
     }
 }
