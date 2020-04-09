@@ -375,6 +375,59 @@ function LoadNewScene() {
                                                  scene.models[i].center[1],
                                                  scene.models[i].center[2],
                                                  1);
+                if (scene.models[i].type === 'cube')
+                {
+                    //Create vertices
+                    var width = scene.models[i].width;
+                    var height = scene.models[i].height;
+                    var depth = scene.models[i].depth;
+                    var center = scene.models[i].center;
+                    var vertex0 = Vector4(center.x - width/2, center.y - height/2, center.z - depth/2, center.w);
+                    var vertex1 = Vector4(center.x + width/2, center.y - height/2, center.z - depth/2, center.w);
+                    var vertex2 = Vector4(center.x + width/2, center.y + height/2, center.z - depth/2, center.w);
+                    var vertex3 = Vector4(center.x - width/2, center.y + height/2, center.z - depth/2, center.w);
+                        
+                    var vertex4 = Vector4(center.x - width/2, center.y - height/2, center.z + depth/2, center.w);
+                    var vertex5 = Vector4(center.x + width/2, center.y - height/2, center.z + depth/2, center.w);
+                    var vertex6 = Vector4(center.x + width/2, center.y + height/2, center.z + depth/2, center.w);
+                    var vertex7 = Vector4(center.x - width/2, center.y + height/2, center.z + depth/2, center.w);
+                    
+                    scene.models[i].vertices.push(vertex0);
+                    scene.models[i].vertices.push(vertex1);
+                    scene.models[i].vertices.push(vertex2);
+                    scene.models[i].vertices.push(vertex3);
+                    scene.models[i].vertices.push(vertex4);
+                    scene.models[i].vertices.push(vertex5);
+                    scene.models[i].vertices.push(vertex6);
+                    scene.models[i].vertices.push(vertex7);
+                    
+                    //Create edges
+                    scene.models[i].edges.push([0, 3, 2, 1]);
+                    scene.models[i].edges.push([4, 7, 6, 5]);
+                    scene.models[i].edges.push([0, 4]);
+                    scene.models[i].edges.push([1, 5]);
+                    scene.models[i].edges.push([3, 7]);
+                    scene.models[i].edges.push([2, 6]);
+                    
+                }
+                else if (scene.models[i].type === 'cone')
+                {
+                    //Create vertices
+                    
+                    //Create edges
+                }
+                else if (scene.models[i].type === 'cylinder')
+                {
+                    //Create vertices
+                    
+                    //Create edges
+                }
+                else if (scene.models[i].type === 'sphere')
+                {
+                    //Create vertices
+                    
+                    //Create edges
+                }
             }
             scene.models[i].matrix = new Matrix(4, 4);
         }
