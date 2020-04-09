@@ -436,7 +436,7 @@ function LoadNewScene() {
                     //Create edges from bottom circle to top vertex
                     for (let k = 0; k < scene.models[i].vertices.length-1; k++)
                     {
-                         scene.models[i].edges.push([k, scene.models[i].vertices[scene.models[i].vertices.length-1]]);
+                         scene.models[i].edges.push([k, scene.models[i].vertices.length-1]);
                     }
                     console.log(scene);
                 }
