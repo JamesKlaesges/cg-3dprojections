@@ -420,7 +420,7 @@ function LoadNewScene() {
                     scene.models[i].vertices = [];
                     
                     //Create vertices for bottom half
-                    var vector = Vector4(center.x + radius, center.y, center.z, center.w);
+                    var vector = Vector4(center.x + radius, center.y - height, center.z, center.w);
                     scene.models[i].vertices.push(vector);
                     for (let k = 0; k < numSides; k++) 
                     {
