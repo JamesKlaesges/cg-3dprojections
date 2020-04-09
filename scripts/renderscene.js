@@ -236,7 +236,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     t = (-1 - vertex0.x)/(vertex1.x - vertex0.x);
                     selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
                     selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
-                    selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
+                    selectpt.x = -1
                 }
                 else if (type == "perspective")
                 {
@@ -255,7 +255,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     t = (1 - vertex0.x)/(vertex1.x - vertex0.x);
                     selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
                     selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
-                    selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
+                    selectpt.x = 1
                 }
                 else if (type == "perspective")
                 {
@@ -273,7 +273,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     t = (-1 - vertex0.y)/(vertex1.y - vertex0.y);
                     selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
                     selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
-                    selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
+                    selectpt.y = -1
                 }
                 else if (type == "perspective")
                 {
@@ -291,7 +291,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     t = (1 - vertex0.y)/(vertex1.y - vertex0.y);
                     selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
                     selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
-                    selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
+                    selectpt.y = 1
                 }
                 else if (type == "perspective")
                 {
@@ -309,7 +309,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     t = (0 - vertex0.z)/(vertex1.z - vertex0.z);
                     selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
                     selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
-                    selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.z = 0
                 }
                 else if (type == "perspective")
                 {
@@ -327,7 +327,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     t = (-1 - vertex0.z)/(vertex1.z - vertex0.z);
                     selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
                     selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
-                    selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.z = -1
                 }
                 else if (type == "perspective")
                 {
