@@ -400,7 +400,6 @@ function LoadNewScene() {
                     scene.models[i].edges.push([1, 5]);
                     scene.models[i].edges.push([3, 7]);
                     scene.models[i].edges.push([2, 6]);
-                    
                 }
                 else if (scene.models[i].type === 'cone')
                 {
@@ -438,7 +437,6 @@ function LoadNewScene() {
                     {
                          scene.models[i].edges.push([k, scene.models[i].vertices.length-1]);
                     }
-                    console.log(scene);
                 }
                 else if (scene.models[i].type === 'cylinder')
                 {
@@ -492,7 +490,6 @@ function LoadNewScene() {
                         scene.models[i].edges.push([k, j]);
                         j = j+1;
                     }
-                    
                 }
                 else if (scene.models[i].type === 'sphere')
                 {
