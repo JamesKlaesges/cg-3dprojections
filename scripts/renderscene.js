@@ -108,7 +108,6 @@ function Animate(timestamp) {
                 
                 //3D Line Clipping
                 var result = clipLine(vertex0, vertex1, scene.view.type, zmin);
-                //result = {pt0: vertex0, pt1: vertex1};
                 if (result != null)
                 {
                     //Draw Line
@@ -123,7 +122,6 @@ function Animate(timestamp) {
 
 // Main drawing code - use information contained i0n variable `scene`
 function DrawScene(result) {
-    console.log(scene);
 
     //Multiply vertices by Mpar or Mper matrix
     var Mpar = new Matrix(4,4);
@@ -157,7 +155,6 @@ function DrawScene(result) {
     result.pt1 = Vector4(vertex1.x, vertex1.y, vertex1.z, vertex1.w);
     
     //Draw 2D lines for each edge
-    console.log(result);
     DrawLine(result.pt0.x/result.pt0.w, result.pt0.y/result.pt0.w, result.pt1.x/result.pt1.w, result.pt1.y/result.pt1.w);
     
 }
@@ -399,26 +396,25 @@ function OnKeyDown(event) {
             console.log("left");
             scene.view.prp.subtract(u); 
             scene.view.srp.subtract(u); 
-            //DrawScene(); 
             
             break;
         case 38: // UP Arrow
             console.log("up");
             scene.view.prp.add(n); 
             scene.view.srp.add(n); 
-            //DrawScene(); 
+
             break;
         case 39: // RIGHT Arrow
             console.log("right");
             scene.view.prp.add(u); 
             scene.view.srp.add(u); 
-            //DrawScene(); 
+
             break;
         case 40: // DOWN Arrow
             console.log("down");
             scene.view.prp.subtract(n); 
             scene.view.srp.subtract(n); 
-            //DrawScene(); 
+
             break;
     }
 }
