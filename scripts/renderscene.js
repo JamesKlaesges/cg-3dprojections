@@ -455,7 +455,7 @@ function LoadNewScene() {
                     }
                     
                     //Create edges for in between the two circles
-                    var temp = j;
+                    var temp = j-1;
                     for (let k = 0; k < temp; k++)
                     {
                         scene.models[i].edges.push([k, j]);
