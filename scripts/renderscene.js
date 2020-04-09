@@ -422,7 +422,7 @@ function LoadNewScene() {
                     scene.models[i].vertices = [];
                     var vector = Vector4(center.x + radius, center.y, center.z, center.w);
                     scene.models[i].vertices.push(vector);
-                    for (let i = 0; i < numSides; i++) 
+                    for (let k = 0; k < numSides; k++) 
                     {
                         vector = Vector4(center.x + Math.round(radius * Math.cos(currentAngle*0.0174533)), center.y + Math.round(radius * Math.sin(currentAngle*0.0174533)), center.w);
                         currentAngle = currentAngle + angle;
@@ -431,9 +431,9 @@ function LoadNewScene() {
                     
                     //Create edges for bottom half
                     scene.models[i].edges = [];
-                    for (let i = 0; i < scene.models[i].vertices.length-1; i++)
+                    for (let k = 0; k < scene.models[i].vertices.length-1; k++)
                     {
-                         scene.models[i].edges.push([i, i+1]);
+                         scene.models[i].edges.push([k, k+1]);
                     }
                     var j = scene.models[i].vertices.length;
                     
@@ -441,7 +441,7 @@ function LoadNewScene() {
                     vector = Vector4(center.x + radius, center.y + height, center.z, center.w);
                     scene.models[i].vertices.push(vector);
                     currentAngle = angle; 
-                    for (let i = 0; i < numSides; i++) 
+                    for (let k = 0; k < numSides; k++) 
                     {
                         vector = Vector4(center.x + Math.round(radius * Math.cos(currentAngle*0.0174533)), center.y + Math.round(radius * Math.sin(currentAngle*0.0174533)), center.w);
                         currentAngle = currentAngle + angle;
@@ -449,15 +449,15 @@ function LoadNewScene() {
                     }
                     
                     //Create edges for top half
-                    for (let i = 0; i < scene.models[i].vertices.length-1; i++)
+                    for (let k = j; k < scene.models[i].vertices.length-1; k++)
                     {
                          scene.models[i].edges.push([i, i+1]);
                     }
                     
                     //Create edges for in between the two circles
-                    for (let i = 0; i < j; i++)
+                    for (let k = 0; k < j; k++)
                     {
-                        scene.models[i].edges.push([i, j]);
+                        scene.models[i].edges.push([k, j]);
                         j = j+1;
                     }
                     console.log(scene);
