@@ -86,8 +86,8 @@ function Animate(timestamp) {
         {
             for (let k = 0; k < scene.models[i].edges[j].length - 1; k++)
             {
-                vertex0 = scene.models[i].vertices[scene.models[i].edges[j][k]];
-                vertex1 = scene.models[i].vertices[scene.models[i].edges[j][k+1]];
+                var vertex0 = scene.models[i].vertices[scene.models[i].edges[j][k]];
+                var vertex1 = scene.models[i].vertices[scene.models[i].edges[j][k+1]];
                 
                 if (scene.view.type == "parallel")
                 {
@@ -105,6 +105,26 @@ function Animate(timestamp) {
                 vertex0 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
                 var vertex = Matrix.multiply([scene.models[i].matrix, vertex1]);
                 vertex1 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+                
+                //Multiply vertices by Mpar or Mper matrix
+                var Mpar = new Matrix(4,4);
+                Mat4x4MPar(Mpar);
+                var Mper = new Matrix(4,4);
+                Mat4x4MPer(Mper);
+                if (scene.view.type == "parallel")
+                {
+                    var vertex = Matrix.multiply([Mpar, vertex0]);
+                    vertex0 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+                    var vertex = Matrix.multiply([Mpar, vertex1]);
+                    vertex1 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+                }
+                else if (scene.view.type == "perspective")
+                {
+                    var vertex = Matrix.multiply([Mper, vertex0]);
+                    vertex0 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+                    var vertex = Matrix.multiply([Mper, vertex1]);
+                    vertex1 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+                }
                 
                 //3D Line Clipping
                 var result = clipLine(vertex0, vertex1, scene.view.type, zmin);
@@ -124,26 +144,6 @@ function Animate(timestamp) {
 // Main drawing code - use information contained i0n variable `scene`
 function DrawScene(result) {
     console.log(scene);
-    
-    //Multiply vertices by Mpar or Mper matrix
-    var Mpar = new Matrix(4,4);
-    Mat4x4MPar(Mpar);
-    var Mper = new Matrix(4,4);
-    Mat4x4MPer(Mper);
-    if (scene.view.type == "parallel")
-    {
-        var vertex0 = Matrix.multiply([Mpar, result.pt0]);
-        result.pt0 = Vector4(vertex0.x, vertex0.y, vertex0.z, vertex0.w);
-        var vertex1 = Matrix.multiply([Mpar, result.pt1]);
-        result.pt1 = Vector4(vertex1.x, vertex1.y, vertex1.z, vertex1.w);
-    }
-    else if (scene.view.type == "perspective")
-    {
-        var vertex0 = Matrix.multiply([Mper, result.pt0]);
-        result.pt0 = Vector4(vertex0.x, vertex0.y, vertex0.z, vertex0.w);
-        var vertex1 = Matrix.multiply([Mper, result.pt1]);
-        result.pt1 = Vector4(vertex1.x, vertex1.y, vertex1.z, vertex1.w);
-    }
 
      //Project onto view plane
     var projectionMatrix = new Matrix(4,4);
