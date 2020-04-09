@@ -23,10 +23,10 @@ function Init() {
     scene = {
         view: {
             type: 'perspective',
-            prp: Vector3(44, 20, -16),
-            srp: Vector3(20, 20, -40),
+            prp: Vector3(0, 0, 100),
+            srp: Vector3(0, 0, 0),
             vup: Vector3(0, 1, 0),
-            clip: [-19, 5, -10, 8, 12, 100]
+            clip: [-1, 17, -0.5, 13, 99, 150]
         },
         models: [
             {
@@ -122,7 +122,7 @@ function Animate(timestamp) {
 
 // Main drawing code - use information contained i0n variable `scene`
 function DrawScene(result) {
-
+    console.log(scene);
     //Multiply vertices by Mpar or Mper matrix
     var Mpar = new Matrix(4,4);
     Mat4x4MPar(Mpar);
