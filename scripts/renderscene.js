@@ -443,7 +443,7 @@ function LoadNewScene() {
                     currentAngle = angle; 
                     for (let k = 0; k < numSides; k++) 
                     {
-                        vector = Vector4(center.x + Math.round(radius * Math.cos(currentAngle*0.0174533)), center.y + Math.round(radius * Math.sin(currentAngle*0.0174533)), center.w);
+                        vector = Vector4(center.x + Math.round(radius * Math.cos(currentAngle*0.0174533)), center.y + height + Math.round(radius * Math.sin(currentAngle*0.0174533)), center.w);
                         currentAngle = currentAngle + angle;
                         scene.models[i].vertices.push(vector);
                     }
