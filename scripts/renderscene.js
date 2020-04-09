@@ -236,6 +236,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     t = (-1 - vertex0.x)/(vertex1.x - vertex0.x);
                     selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
                     selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.w = vertex0.w + t * (vertex1.w - vertex0.w);
                     selectpt.x = -1;
                 }
                 else if (type == "perspective")
@@ -244,6 +245,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
                     selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
                     selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.w = vertex0.w + t * (vertex1.w - vertex0.w);
                 }
                 
             }
@@ -255,6 +257,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     t = (1 - vertex0.x)/(vertex1.x - vertex0.x);
                     selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
                     selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.w = vertex0.w + t * (vertex1.w - vertex0.w);
                     selectpt.x = 1;
                 }
                 else if (type == "perspective")
@@ -263,6 +266,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
                     selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
                     selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.w = vertex0.w + t * (vertex1.w - vertex0.w);
                 }
             }
             else if ((selectout & BOTTOM) !== 0)
@@ -273,6 +277,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     t = (-1 - vertex0.y)/(vertex1.y - vertex0.y);
                     selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
                     selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.w = vertex0.w + t * (vertex1.w - vertex0.w);
                     selectpt.y = -1;
                 }
                 else if (type == "perspective")
@@ -281,6 +286,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
                     selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
                     selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.w = vertex0.w + t * (vertex1.w - vertex0.w);
                 }
             }
             else if ((selectout & TOP) !== 0)
@@ -291,6 +297,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     t = (1 - vertex0.y)/(vertex1.y - vertex0.y);
                     selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
                     selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.w = vertex0.w + t * (vertex1.w - vertex0.w);
                     selectpt.y = 1;
                 }
                 else if (type == "perspective")
@@ -299,6 +306,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
                     selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
                     selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.w = vertex0.w + t * (vertex1.w - vertex0.w);
                 }
             }
             else if ((selectout & FRONT) !== 0)
@@ -309,6 +317,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     t = (0 - vertex0.z)/(vertex1.z - vertex0.z);
                     selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
                     selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
+                    selectpt.w = vertex0.w + t * (vertex1.w - vertex0.w);
                     selectpt.z = 0;
                 }
                 else if (type == "perspective")
@@ -317,6 +326,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
                     selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
                     selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.w = vertex0.w + t * (vertex1.w - vertex0.w);
                 }
             }
             else
@@ -327,6 +337,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     t = (-1 - vertex0.z)/(vertex1.z - vertex0.z);
                     selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
                     selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
+                    selectpt.w = vertex0.w + t * (vertex1.w - vertex0.w);
                     selectpt.z = -1;
                 }
                 else if (type == "perspective")
@@ -335,6 +346,7 @@ function clipLine(vertex0, vertex1, type, zmin)
                     selectpt.x = vertex0.x + t * (vertex1.x - vertex0.x);
                     selectpt.y = vertex0.y + t * (vertex1.y - vertex0.y);
                     selectpt.z = vertex0.z + t * (vertex1.z - vertex0.z);
+                    selectpt.w = vertex0.w + t * (vertex1.w - vertex0.w);
                 }
             }
             
