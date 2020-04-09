@@ -79,40 +79,6 @@ function Animate(timestamp) {
 
     // -----Step 2: Transform Models-----
     
-    if (scene.view.type == "parallel")
-    {
-        for (let i = 0; i < scene.models.length; i++)
-        {
-            //Calculate transformation matrix to transform models into canonical view volume
-            Mat4x4Parallel(scene.models[i].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);
-            
-            //Multiply vertices with transformation matrix
-            for (let j = 0; j < scene.models[i].vertices.length; j++)
-            {
-                var vertex = Matrix.multiply([scene.models[i].matrix, scene.models[i].vertices[j]]);
-                scene.models[i].vertices[j] = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
-            }
-            
-        }
-    }
-    else if (scene.view.type == "perspective")
-    {
-        for (let i = 0; i < scene.models.length; i++)
-        {
-            //Calculate transformation matrix to transform models into canonical view volume
-            Mat4x4Projection(scene.models[i].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);
-            
-            //Multiply vertices with transformation matrix
-            for (let j = 0; j < scene.models[i].vertices.length; j++)
-            {
-                var vertex = Matrix.multiply([scene.models[i].matrix, scene.models[i].vertices[j]]);
-                scene.models[i].vertices[j] = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
-            }
-            
-        }
-    }
-    
-    //Implement Cohen-Sutherland 3D line clipping
     var zmin = -scene.view.clip[4]/scene.view.clip[5];
     for (let i = 0; i < scene.models.length; i++)
     {
@@ -122,6 +88,25 @@ function Animate(timestamp) {
             {
                 vertex0 = scene.models[i].vertices[scene.models[i].edges[j][k]];
                 vertex1 = scene.models[i].vertices[scene.models[i].edges[j][k+1]];
+                
+                if (scene.view.type == "parallel")
+                {
+                    //Calculate transformation matrix to transform models into canonical view volume
+                    Mat4x4Parallel(scene.models[i].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);
+                }
+                else if (scene.view.type == "perspective")
+                {
+                    //Calculate transformation matrix to transform models into canonical view volume
+                    Mat4x4Projection(scene.models[i].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);
+                }
+                
+                //Multiply vertices with transformation matrix
+                var vertex = Matrix.multiply([scene.models[i].matrix, vertex0]);
+                vertex0 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+                var vertex = Matrix.multiply([scene.models[i].matrix, vertex1]);
+                vertex1 = Vector4(vertex.x, vertex.y, vertex.z, vertex.w);
+                
+                //3D Line Clipping
                 //var result = clipLine(vertex0, vertex1, scene.view.type, zmin);
                 result = {pt0: vertex0, pt1: vertex1};
                 if (result != null)
@@ -417,26 +402,26 @@ function OnKeyDown(event) {
             console.log("left");
             scene.view.prp.subtract(u); 
             scene.view.srp.subtract(u); 
-            DrawScene(); 
+            //DrawScene(); 
             
             break;
         case 38: // UP Arrow
             console.log("up");
             scene.view.prp.add(n); 
             scene.view.srp.add(n); 
-            DrawScene(); 
+            //DrawScene(); 
             break;
         case 39: // RIGHT Arrow
             console.log("right");
             scene.view.prp.add(u); 
             scene.view.srp.add(u); 
-            DrawScene(); 
+            //DrawScene(); 
             break;
         case 40: // DOWN Arrow
             console.log("down");
             scene.view.prp.subtract(n); 
             scene.view.srp.subtract(n); 
-            DrawScene(); 
+            //DrawScene(); 
             break;
     }
 }
