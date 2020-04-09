@@ -416,7 +416,7 @@ function LoadNewScene() {
                     var height = scene.models[i].height;
                     var numSides = scene.models[i].sides;
                     var center = scene.models[i].center;
-                    var angle = 360/num_points;
+                    var angle = 360/numSides;
                     var currentAngle = angle; 
                     
                     scene.models[i].vertices = [];
