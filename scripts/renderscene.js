@@ -404,10 +404,41 @@ function LoadNewScene() {
                 }
                 else if (scene.models[i].type === 'cone')
                 {
-                    //Create vertices
+                    var radius = scene.models[i].radius;
+                    var height = scene.models[i].height;
+                    var numSides = scene.models[i].sides;
+                    var center = scene.models[i].center;
+                    var angle = 360/numSides;
+                    var currentAngle = angle; 
+                    scene.models[i].vertices = [];
                     
-                    //Create edges
+                    //Create vertices for bottom circle
+                    var vector = Vector4(center.x + radius, center.y, center.z, center.w);
+                    scene.models[i].vertices.push(vector);
+                    for (let k = 0; k < numSides; k++) 
+                    {
+                        vector = Vector4(center.x + (radius * Math.cos(currentAngle*0.0174533)), center.y, center.z + (radius * Math.sin(currentAngle*0.0174533)), center.w);
+                        currentAngle = currentAngle + angle;
+                        scene.models[i].vertices.push(vector);
+                    }
+                    
+                    //Create edges for bottom circle
                     scene.models[i].edges = [];
+                    for (let k = 0; k < scene.models[i].vertices.length-1; k++)
+                    {
+                         scene.models[i].edges.push([k, k+1]);
+                    }
+                    
+                    //Create top vertex
+                    var vector = Vector4(center.x, center.y + height, center.z, center.w);
+                    scene.models[i].vertices.push(vector);
+                    
+                    //Create edges from bottom circle to top vertex
+                    for (let k = 0; k < scene.models[i].vertices.length-1; k++)
+                    {
+                         scene.models[i].edges.push([k, scene.models[i].vertices[scene.models[i].vertices.length-1]]);
+                    }
+                    
                 }
                 else if (scene.models[i].type === 'cylinder')
                 {
