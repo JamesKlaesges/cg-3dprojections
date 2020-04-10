@@ -82,23 +82,22 @@ function Animate(timestamp) {
     var zmin = -scene.view.clip[4]/scene.view.clip[5];
     for (let i = 0; i < scene.models.length; i++)
     {
+        if (scene.view.type == "parallel")
+        {
+            //Calculate transformation matrix to transform models into canonical view volume
+            Mat4x4Parallel(scene.models[i].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);
+        }
+        else if (scene.view.type == "perspective")
+        {
+            //Calculate transformation matrix to transform models into canonical view volume
+            Mat4x4Projection(scene.models[i].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);
+        }
         for (let j = 0; j < scene.models[i].edges.length; j++)
         {
             for (let k = 0; k < scene.models[i].edges[j].length - 1; k++)
             {
                 var vertex0 = scene.models[i].vertices[scene.models[i].edges[j][k]];
                 var vertex1 = scene.models[i].vertices[scene.models[i].edges[j][k+1]];
-                
-                if (scene.view.type == "parallel")
-                {
-                    //Calculate transformation matrix to transform models into canonical view volume
-                    Mat4x4Parallel(scene.models[i].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);
-                }
-                else if (scene.view.type == "perspective")
-                {
-                    //Calculate transformation matrix to transform models into canonical view volume
-                    Mat4x4Projection(scene.models[i].matrix, scene.view.prp, scene.view.srp, scene.view.vup, scene.view.clip);
-                }
                 
                 //Multiply vertices with transformation matrix
                 var vertex = Matrix.multiply([scene.models[i].matrix, vertex0]);
