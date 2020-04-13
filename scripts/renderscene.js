@@ -499,41 +499,41 @@ function LoadNewScene() {
                     var slices = scene.models[i].slices; 
                     var stacks = scene.models[i].stacks; 
                     var radius = scene.models[i].radius
-                    for( let k = 0; k < stacks; k++ ){
-                        var slice = []; 
-                        var theta_stack = Math.PI * slices / stacks * (k + 1); 
-                        var stack_radius = Math.sin(theta_stack) * radius; 
-                        var y = center.y + radius * Math.cos(theta_stack); 
-                        //create vertexs.
+                    for( let k = 0; k <= stacks; k++ ){
+                        let slice = []; 
+                        let theta_stack = Math.PI / stacks * (k+1); 
+                        let layer_radius = Math.sin(theta_stack) * radius; 
+                        let y = center.y + radius * Math.cos(theta_stack); 
                         for( let l = 0; l < slices; l++ ){
-                            var theta_slice = Math.PI * 2 / slices * (l + 1); 
-                            var x = center.x + stack_radius * Math.cos( theta_slice );
-                            var z = center.z + center.z + stack_radius  * Math.sin( theta_slice ); 
-                            var vertex = new Vector4( x, y, z, 1 ); 
+                            let theta_slice = Math.PI * 2 / slices * l ; 
+                            let x = center.x + layer_radius * Math.cos( theta_slice );
+                            let z = center.z + layer_radius * Math.sin( theta_slice ); 
+                            let vertex = new Vector4( x, y, z, 1 ); 
                             scene.models[i].vertices.push( vertex ); 
                             slice.push( k * slices + l);
                         }
-                        //create edges 
                         slice.push( k * slices ); 
+                        console.log("added edge: " + slice ); 
                         scene.models[i].edges.push(slice); 
                     } 
 
                     //polar vertexs. 
-                    var top_vertex = new Vector4( center.x, center.y + radius, center.z, 1);
-                    var bottom_vertex = new Vector4( center.x, center.y-radius, center.z, 1); 
+                    let top_vertex = new Vector4( center.x, center.y + radius, center.z, 1);
+                    let bottom_vertex = new Vector4( center.x, center.y - radius, center.z, 1); 
                     scene.models[i].vertices.push( top_vertex ); 
+                    let top_index = scene.models[i].vertices.length; 
                     scene.models[i].vertices.push( bottom_vertex ); 
-                    
+
+
                     for( let k = 0; k < slices; k++ ){
-                        var slice = [];
-                        slice.push( scene.models[i].vertices.length - 2); 
+                        let slice = [];
+                        slice.push( top_index - 1 ); 
                         for( let l = 0; l < stacks; l++ ){
                             slice.push( l * stacks + k ); 
                         }
-                        slice.push( scene.models[i].vertices.length - 1 );  
+                        slice.push( top_index );  
+                        scene.models[i].edges.push( slice );
                     }
-                    scene.models[i].edges.push( slice );
-                    
                     console.log( scene.models[i].edges ); 
                     console.log( scene.models[i].vertices );
                 }
