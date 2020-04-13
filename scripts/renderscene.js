@@ -532,10 +532,11 @@ function LoadNewScene() {
                         }
                         slice.push( scene.models[i].vertices.length - 1 );  
                     }
-                    scene.models[i].edges.push( slice ); 
+                    scene.models[i].edges.push( slice );
+                    
+                    console.log( scene.models[i].edges ); 
+                    console.log( scene.models[i].vertices );
                 }
-                console.log( scene.models[i].edges ); 
-                console.log( scene.models[i].vertices ); 
             }
             scene.models[i].matrix = new Matrix(4, 4);
         }
